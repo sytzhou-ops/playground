@@ -136,16 +136,31 @@ const BountyAnalysis = () => {
     analyzeSubmission();
   }, [authLoading, user]);
 
-  const analyzeSubmission = async () => {
+  const analyzeSubmission = async (includeAnswers = false) => {
     setLoading(true);
     setError(null);
     try {
+      let enrichedData = { ...bountyData };
+      if (includeAnswers && analysis?.missing_info) {
+        const clarifications = analysis.missing_info
+          .map((item, i) => answers[i] ? `${item.field}: ${answers[i]}` : null)
+          .filter(Boolean)
+          .join("\n");
+        if (clarifications) {
+          enrichedData.additionalNotes = [
+            enrichedData.additionalNotes || "",
+            "--- Clarifications ---",
+            clarifications,
+          ].filter(Boolean).join("\n");
+        }
+      }
       const { data, error: fnError } = await supabase.functions.invoke("analyze-bounty", {
-        body: { bountyData },
+        body: { bountyData: enrichedData },
       });
       if (fnError) throw fnError;
       if (data?.error) throw new Error(data.error);
       setAnalysis(data.analysis);
+      setAnswers({});
     } catch (e: any) {
       console.error("Analysis failed:", e);
       setError(e.message || "Failed to analyze bounty");
@@ -254,7 +269,7 @@ const BountyAnalysis = () => {
               <Button variant="outline" onClick={() => navigate("/post-bounty", { state: { bountyData } })}>
                 <ArrowLeft className="w-4 h-4 mr-2" /> Edit Bounty
               </Button>
-              <Button onClick={analyzeSubmission}>Retry Analysis</Button>
+              <Button onClick={() => analyzeSubmission()}>Retry Analysis</Button>
             </div>
           </div>
         </main>
@@ -420,7 +435,7 @@ const BountyAnalysis = () => {
             </Button>
           ) : (
             <Button
-              onClick={analyzeSubmission}
+              onClick={() => analyzeSubmission(true)}
               className="gap-2 glow-primary"
             >
               <Sparkles className="w-4 h-4" /> Re-Analyze
