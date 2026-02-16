@@ -355,7 +355,8 @@ const BountyWall = () => {
                     transition={{ delay: i * 0.05 }}
                     layout
                   >
-                    <Card className="h-full hover:border-primary/30 transition-colors">
+                    <Link to={`/bounties/${bounty.id}`} className="block h-full">
+                    <Card className="h-full hover:border-primary/30 transition-colors cursor-pointer">
                       <CardHeader className="pb-3">
                         <div className="flex items-start justify-between gap-3">
                           <CardTitle className="text-lg leading-snug line-clamp-2">{bounty.title}</CardTitle>
@@ -397,6 +398,7 @@ const BountyWall = () => {
                         </span>
                       </CardFooter>
                     </Card>
+                    </Link>
                   </motion.div>
                 );
               })}
