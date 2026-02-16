@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -74,9 +75,16 @@ const slideVariants = {
 
 const PostBounty = () => {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [formData, setFormData] = useState<BountyFormData>(initialFormData);
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate("/auth", { state: { returnTo: "/post-bounty" } });
+    }
+  }, [user, authLoading, navigate]);
 
   const update = (field: keyof BountyFormData, value: string | number) =>
     setFormData((prev) => ({ ...prev, [field]: value }));
