@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
-import { DoodleUnderline, DoodleStar, DoodleSquiggle } from "./DoodleElements";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { DoodleStar, DoodleSquiggle } from "./DoodleElements";
 
 const Navbar = () => {
+  const { user, signOut } = useAuth();
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -30,13 +34,39 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2">
-            Log in
-          </button>
-          <button className="relative text-sm font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity">
-            Post a Bounty
-            <DoodleSquiggle className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 text-primary opacity-40" />
-          </button>
+          {user ? (
+            <>
+              <span className="text-sm text-muted-foreground hidden sm:inline truncate max-w-[150px]">
+                {user.email || user.phone}
+              </span>
+              <button
+                onClick={signOut}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2"
+              >
+                Log out
+              </button>
+              <button className="relative text-sm font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity">
+                Post a Bounty
+                <DoodleSquiggle className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 text-primary opacity-40" />
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/auth"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2"
+              >
+                Log in
+              </Link>
+              <Link
+                to="/auth"
+                className="relative text-sm font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Post a Bounty
+                <DoodleSquiggle className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 text-primary opacity-40" />
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </motion.nav>
