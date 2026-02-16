@@ -298,36 +298,58 @@ const StepPain = ({ formData, update }: StepProps) => (
       </RadioGroup>
     </div>
     <div className={fieldClass}>
-      <Label className="text-foreground">Hours wasted per week: <span className="text-primary font-bold">{formData.hoursWasted}h</span></Label>
-      <Slider
-        value={[formData.hoursWasted]}
-        onValueChange={([v]) => update("hoursWasted", v)}
-        min={1}
-        max={40}
-        step={1}
-        className="pt-2"
-      />
-      <div className="flex justify-between text-xs text-muted-foreground">
-        <span>1h</span>
-        <span>40h</span>
+      <Label className="text-foreground">Hours wasted per week</Label>
+      <div className="flex items-center gap-3">
+        <Slider
+          value={[formData.hoursWasted]}
+          onValueChange={([v]) => update("hoursWasted", v)}
+          min={1}
+          max={40}
+          step={1}
+          className="flex-1"
+        />
+        <div className="flex items-center gap-1">
+          <Input
+            type="number"
+            min={1}
+            max={40}
+            value={formData.hoursWasted}
+            onChange={(e) => {
+              const v = Math.min(40, Math.max(1, Number(e.target.value) || 1));
+              update("hoursWasted", v);
+            }}
+            className="w-20 text-center text-primary font-bold"
+          />
+          <span className="text-sm text-muted-foreground">h</span>
+        </div>
       </div>
     </div>
     <div className={fieldClass}>
-      <Label className="text-foreground">
-        Estimated annual cost of this problem:{" "}
-        <span className="text-accent font-bold">{formatCurrency(formData.annualCost)}</span>
-      </Label>
-      <Slider
-        value={[formData.annualCost]}
-        onValueChange={([v]) => update("annualCost", v)}
-        min={1000}
-        max={500000}
-        step={1000}
-        className="pt-2"
-      />
-      <div className="flex justify-between text-xs text-muted-foreground">
-        <span>$1K</span>
-        <span>$500K</span>
+      <Label className="text-foreground">Estimated annual cost of this problem</Label>
+      <div className="flex items-center gap-3">
+        <Slider
+          value={[formData.annualCost]}
+          onValueChange={([v]) => update("annualCost", v)}
+          min={1000}
+          max={500000}
+          step={1000}
+          className="flex-1"
+        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">$</span>
+          <Input
+            type="number"
+            min={1000}
+            max={500000}
+            step={1000}
+            value={formData.annualCost}
+            onChange={(e) => {
+              const v = Math.min(500000, Math.max(1000, Number(e.target.value) || 1000));
+              update("annualCost", v);
+            }}
+            className="w-28 pl-7 text-accent font-bold"
+          />
+        </div>
       </div>
     </div>
     <div className={fieldClass}>
@@ -384,21 +406,31 @@ const StepRequest = ({ formData, update }: StepProps) => (
 const StepBounty = ({ formData, update }: StepProps) => (
   <div className="space-y-6">
     <div className={fieldClass}>
-      <Label className="text-foreground">
-        Bounty amount:{" "}
-        <span className="text-2xl text-accent font-bold">{formatCurrency(formData.bountyAmount)}</span>
-      </Label>
-      <Slider
-        value={[formData.bountyAmount]}
-        onValueChange={([v]) => update("bountyAmount", v)}
-        min={500}
-        max={50000}
-        step={250}
-        className="pt-2"
-      />
-      <div className="flex justify-between text-xs text-muted-foreground">
-        <span>$500</span>
-        <span>$50,000</span>
+      <Label className="text-foreground">Bounty amount</Label>
+      <div className="flex items-center gap-3">
+        <Slider
+          value={[formData.bountyAmount]}
+          onValueChange={([v]) => update("bountyAmount", v)}
+          min={500}
+          max={50000}
+          step={250}
+          className="flex-1"
+        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">$</span>
+          <Input
+            type="number"
+            min={500}
+            max={50000}
+            step={250}
+            value={formData.bountyAmount}
+            onChange={(e) => {
+              const v = Math.min(50000, Math.max(500, Number(e.target.value) || 500));
+              update("bountyAmount", v);
+            }}
+            className="w-28 pl-7 text-2xl text-accent font-bold"
+          />
+        </div>
       </div>
     </div>
 
