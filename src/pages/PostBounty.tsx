@@ -50,13 +50,13 @@ const initialFormData: BountyFormData = {
   problemDescription: "",
   currentProcess: "",
   painFrequency: "",
-  hoursWasted: 5,
-  annualCost: 5000,
+  hoursWasted: 0,
+  annualCost: 0,
   painDescription: "",
   desiredOutcome: "",
   acceptanceCriteria: "",
   toolPreferences: "",
-  bountyAmount: 2500,
+  bountyAmount: 0,
   paymentStructure: "milestone",
   urgency: "",
   deadline: "",
@@ -303,19 +303,19 @@ const StepPain = ({ formData, update }: StepProps) => (
         <Slider
           value={[formData.hoursWasted]}
           onValueChange={([v]) => update("hoursWasted", v)}
-          min={1}
-          max={40}
+          min={0}
+          max={100}
           step={1}
           className="flex-1"
         />
         <div className="flex items-center gap-1">
           <Input
             type="number"
-            min={1}
-            max={40}
+            min={0}
+            max={100}
             value={formData.hoursWasted}
             onChange={(e) => {
-              const v = Math.min(40, Math.max(1, Number(e.target.value) || 1));
+              const v = Math.min(100, Math.max(0, Number(e.target.value) || 0));
               update("hoursWasted", v);
             }}
             className="w-20 text-center text-primary font-bold"
@@ -330,7 +330,7 @@ const StepPain = ({ formData, update }: StepProps) => (
         <Slider
           value={[formData.annualCost]}
           onValueChange={([v]) => update("annualCost", v)}
-          min={1000}
+          min={0}
           max={500000}
           step={1000}
           className="flex-1"
@@ -339,12 +339,12 @@ const StepPain = ({ formData, update }: StepProps) => (
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">$</span>
           <Input
             type="number"
-            min={1000}
+            min={0}
             max={500000}
             step={1000}
             value={formData.annualCost}
             onChange={(e) => {
-              const v = Math.min(500000, Math.max(1000, Number(e.target.value) || 1000));
+              const v = Math.min(500000, Math.max(0, Number(e.target.value) || 0));
               update("annualCost", v);
             }}
             className="w-28 pl-7 text-accent font-bold"
@@ -411,7 +411,7 @@ const StepBounty = ({ formData, update }: StepProps) => (
         <Slider
           value={[formData.bountyAmount]}
           onValueChange={([v]) => update("bountyAmount", v)}
-          min={500}
+          min={0}
           max={50000}
           step={250}
           className="flex-1"
@@ -420,12 +420,12 @@ const StepBounty = ({ formData, update }: StepProps) => (
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">$</span>
           <Input
             type="number"
-            min={500}
+            min={0}
             max={50000}
             step={250}
             value={formData.bountyAmount}
             onChange={(e) => {
-              const v = Math.min(50000, Math.max(500, Number(e.target.value) || 500));
+              const v = Math.min(50000, Math.max(0, Number(e.target.value) || 0));
               update("bountyAmount", v);
             }}
             className="w-28 pl-7 text-2xl text-accent font-bold"
