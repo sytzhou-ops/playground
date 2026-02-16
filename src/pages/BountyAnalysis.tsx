@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
@@ -116,6 +117,7 @@ const BountyAnalysis = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const bountyData = location.state?.bountyData;
+  const { user, loading: authLoading } = useAuth();
 
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(true);
@@ -123,12 +125,16 @@ const BountyAnalysis = () => {
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
   useEffect(() => {
+    if (!authLoading && !user) {
+      navigate("/auth");
+      return;
+    }
     if (!bountyData) {
       navigate("/post-bounty");
       return;
     }
     analyzeSubmission();
-  }, []);
+  }, [authLoading, user]);
 
   const analyzeSubmission = async () => {
     setLoading(true);

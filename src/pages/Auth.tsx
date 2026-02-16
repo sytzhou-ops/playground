@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
@@ -13,6 +13,8 @@ import { Mail, Phone, Chrome, Apple } from "lucide-react";
 
 const Auth = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnTo = (location.state as any)?.returnTo || "/";
   const [loading, setLoading] = useState(false);
   const [authMethod, setAuthMethod] = useState<"email" | "phone">("email");
 
@@ -40,12 +42,12 @@ const Auth = () => {
         });
         if (error) throw error;
         toast({ title: "Account created!", description: "You're now signed in." });
-        navigate("/");
+        navigate(returnTo);
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast({ title: "Welcome back!" });
-        navigate("/");
+        navigate(returnTo);
       }
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
@@ -76,7 +78,7 @@ const Auth = () => {
       const { error } = await supabase.auth.verifyOtp({ phone, token: otp, type: "sms" });
       if (error) throw error;
       toast({ title: "Welcome!" });
-      navigate("/");
+      navigate(returnTo);
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
     } finally {
