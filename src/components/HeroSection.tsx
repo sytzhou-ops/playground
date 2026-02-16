@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { DoodleUnderline, DoodleArrow, DoodleStar, DoodleCircle } from "./DoodleElements";
 
 const HeroSection = () => {
@@ -57,10 +58,10 @@ const HeroSection = () => {
           transition={{ duration: 0.7, delay: 0.7 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <button className="group relative bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl text-lg glow-primary hover:opacity-90 transition-all">
+          <Link to="/post-bounty" className="group relative bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl text-lg glow-primary hover:opacity-90 transition-all">
             Post a Bounty
             <span className="font-doodle text-sm ml-2 opacity-70">— it's free!</span>
-          </button>
+          </Link>
           <button className="flex items-center gap-2 text-muted-foreground hover:text-foreground px-8 py-4 rounded-xl border border-border hover:border-muted-foreground/30 transition-all">
             Browse Bounties
             <DoodleArrow className="w-10 h-5 text-primary" />
