@@ -23,17 +23,20 @@ Analyze the submission and return a JSON object using the tool provided. Evaluat
 2. **Clarity Score** (0-100): How clearly the problem and desired outcome are articulated.
 3. **Scopability Score** (0-100): Whether an engineer could write a statement of work from this.
 4. **Overall Verdict**: "ready" | "needs_work" | "insufficient"
-   - ready: Engineer can scope this now (all scores > 70)
-   - needs_work: Mostly there but needs clarification on a few things
-   - insufficient: Too vague to scope
+   - ready: Engineer can scope this now (all scores > 60)
+   - needs_work: Has the core idea but missing a couple key details
+   - insufficient: Too vague to even understand the problem
+   Keep the bar LOW. A clear title + problem description + rough budget = "needs_work" at minimum.
 
-5. **Strengths**: 1-3 things the submitter did well (be specific, reference their actual inputs).
-6. **Missing Info**: List of specific missing pieces that are critical for scoping. For each, provide:
+5. **Strengths**: 1-2 things the submitter did well (be specific, reference their actual inputs).
+6. **Missing Info**: Only the TOP 2-3 most critical gaps a builder absolutely needs to start scoping. Skip nice-to-haves. Keep questions short and easy to answer. For each:
    - field: which area it relates to
-   - question: a specific clarifying question to ask the user
-   - priority: "critical" | "important" | "nice_to_have"
+   - question: a specific, non-intimidating clarifying question
+   - priority: "critical" | "important"
 7. **Summary**: A 2-3 sentence executive summary of the bounty as you understand it.
-8. **Suggestions**: 1-3 concrete suggestions to strengthen the bounty.`;
+8. **Suggestions**: 1-2 concrete suggestions to strengthen the bounty.
+
+The goal is to get the builder ~60% of what they need to scope — not 100%. Builders figure out details during engagement.`;
 
     const userPrompt = `Here is the bounty submission to analyze:
 
