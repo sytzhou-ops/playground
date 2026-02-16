@@ -96,9 +96,7 @@ const PostBounty = () => {
   };
 
   const handleSubmit = () => {
-    // For now, just log and navigate back
-    console.log("Bounty submitted:", formData);
-    navigate("/");
+    navigate("/bounty-analysis", { state: { bountyData: formData } });
   };
 
   const currentStep = STEPS[step];

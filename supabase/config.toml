@@ -1,1 +1,4 @@
 project_id = "sbekdnlekjipmybafhca"
+
+[functions.analyze-bounty]
+verify_jwt = false
