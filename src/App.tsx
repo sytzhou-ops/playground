@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import PostBounty from "./pages/PostBounty";
 import BountyAnalysis from "./pages/BountyAnalysis";
+import BountyWall from "./pages/BountyWall";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/post-bounty" element={<PostBounty />} />
             <Route path="/bounty-analysis" element={<BountyAnalysis />} />
+            <Route path="/bounties" element={<BountyWall />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

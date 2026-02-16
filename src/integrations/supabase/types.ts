@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bounties: {
+        Row: {
+          acceptance_criteria: string | null
+          additional_notes: string | null
+          ai_clarity_score: number | null
+          ai_completeness_score: number | null
+          ai_scopability_score: number | null
+          ai_summary: string | null
+          annual_cost: number | null
+          bounty_amount: number
+          created_at: string
+          current_process: string | null
+          deadline: string | null
+          desired_outcome: string | null
+          hours_wasted: number | null
+          id: string
+          industry: string | null
+          pain_description: string | null
+          pain_frequency: string | null
+          payment_structure: string | null
+          problem_description: string
+          status: string
+          title: string
+          tool_preferences: string | null
+          updated_at: string
+          urgency: string | null
+          user_id: string
+        }
+        Insert: {
+          acceptance_criteria?: string | null
+          additional_notes?: string | null
+          ai_clarity_score?: number | null
+          ai_completeness_score?: number | null
+          ai_scopability_score?: number | null
+          ai_summary?: string | null
+          annual_cost?: number | null
+          bounty_amount?: number
+          created_at?: string
+          current_process?: string | null
+          deadline?: string | null
+          desired_outcome?: string | null
+          hours_wasted?: number | null
+          id?: string
+          industry?: string | null
+          pain_description?: string | null
+          pain_frequency?: string | null
+          payment_structure?: string | null
+          problem_description: string
+          status?: string
+          title: string
+          tool_preferences?: string | null
+          updated_at?: string
+          urgency?: string | null
+          user_id: string
+        }
+        Update: {
+          acceptance_criteria?: string | null
+          additional_notes?: string | null
+          ai_clarity_score?: number | null
+          ai_completeness_score?: number | null
+          ai_scopability_score?: number | null
+          ai_summary?: string | null
+          annual_cost?: number | null
+          bounty_amount?: number
+          created_at?: string
+          current_process?: string | null
+          deadline?: string | null
+          desired_outcome?: string | null
+          hours_wasted?: number | null
+          id?: string
+          industry?: string | null
+          pain_description?: string | null
+          pain_frequency?: string | null
+          payment_structure?: string | null
+          problem_description?: string
+          status?: string
+          title?: string
+          tool_preferences?: string | null
+          updated_at?: string
+          urgency?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

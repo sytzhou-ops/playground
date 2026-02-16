@@ -155,9 +155,40 @@ const BountyAnalysis = () => {
     }
   };
 
-  const handlePostBounty = () => {
-    toast.success("Bounty posted! 🎉");
-    navigate("/");
+  const handlePostBounty = async () => {
+    if (!user || !bountyData) return;
+    try {
+      const { error: insertError } = await supabase.from("bounties").insert({
+        user_id: user.id,
+        title: bountyData.title,
+        industry: bountyData.industry,
+        problem_description: bountyData.problemDescription,
+        current_process: bountyData.currentProcess || null,
+        pain_frequency: bountyData.painFrequency || null,
+        hours_wasted: bountyData.hoursWasted,
+        annual_cost: bountyData.annualCost,
+        pain_description: bountyData.painDescription || null,
+        desired_outcome: bountyData.desiredOutcome || null,
+        acceptance_criteria: bountyData.acceptanceCriteria || null,
+        tool_preferences: bountyData.toolPreferences || null,
+        bounty_amount: bountyData.bountyAmount,
+        payment_structure: bountyData.paymentStructure,
+        urgency: bountyData.urgency || null,
+        deadline: bountyData.deadline || null,
+        additional_notes: bountyData.additionalNotes || null,
+        status: "open",
+        ai_summary: analysis?.summary || null,
+        ai_completeness_score: analysis?.completeness_score ?? null,
+        ai_clarity_score: analysis?.clarity_score ?? null,
+        ai_scopability_score: analysis?.scopability_score ?? null,
+      });
+      if (insertError) throw insertError;
+      toast.success("Bounty posted! 🎉");
+      navigate("/bounties");
+    } catch (e: any) {
+      console.error("Failed to post bounty:", e);
+      toast.error(e.message || "Failed to post bounty");
+    }
   };
 
   if (loading) {
