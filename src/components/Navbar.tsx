@@ -45,10 +45,10 @@ const Navbar = () => {
               >
                 Log out
               </button>
-              <button className="relative text-sm font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity">
+              <Link to="/post-bounty" className="relative text-sm font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity">
                 Post a Bounty
                 <DoodleSquiggle className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 text-primary opacity-40" />
-              </button>
+              </Link>
             </>
           ) : (
             <>

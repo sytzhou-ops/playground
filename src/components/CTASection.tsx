@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { DoodleStar, DoodleSquiggle } from "./DoodleElements";
 
 const CTASection = () => {
@@ -27,9 +28,9 @@ const CTASection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl text-lg glow-primary hover:opacity-90 transition-all">
+            <Link to="/post-bounty" className="bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl text-lg glow-primary hover:opacity-90 transition-all">
               Post a Bounty
-            </button>
+            </Link>
             <button className="border border-border text-foreground hover:border-primary/40 px-8 py-4 rounded-xl text-lg transition-all">
               Join as a Builder
             </button>
