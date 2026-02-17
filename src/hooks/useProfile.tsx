@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export interface Profile {
   id: string;
@@ -16,31 +16,32 @@ export interface Profile {
   linkedin_url: string | null;
 }
 
+const fetchProfile = async (userId: string) => {
+  const { data } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("user_id", userId)
+    .maybeSingle();
+  return (data as Profile | null) ?? null;
+};
+
 export const useProfile = () => {
   const { user } = useAuth();
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  const fetchProfile = async () => {
-    if (!user) {
-      setProfile(null);
-      setLoading(false);
-      return;
-    }
-    const { data } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("user_id", user.id)
-      .maybeSingle();
-    setProfile(data as Profile | null);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchProfile();
-  }, [user]);
+  const { data: profile = null, isLoading: loading } = useQuery({
+    queryKey: ["profile", user?.id],
+    queryFn: () => fetchProfile(user!.id),
+    enabled: !!user,
+  });
 
   const isOnboarded = profile ? profile.full_name.trim().length > 0 : false;
 
-  return { profile, loading, isOnboarded, refetch: fetchProfile };
+  const refetch = () => {
+    if (user) {
+      queryClient.invalidateQueries({ queryKey: ["profile", user.id] });
+    }
+  };
+
+  return { profile, loading, isOnboarded, refetch };
 };
