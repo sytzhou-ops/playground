@@ -82,6 +82,7 @@ const Auth = () => {
   const handleOAuth = async (provider: "google" | "apple") => {
     setLoading(true);
     try {
+      localStorage.setItem("auth_return_to", returnTo);
       const { error } = await lovable.auth.signInWithOAuth(provider, {
         redirect_uri: window.location.origin,
       });
