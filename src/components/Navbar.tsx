@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useHunterProfile } from "@/hooks/useHunterProfile";
 import { DoodleStar, DoodleSquiggle } from "./DoodleElements";
+import { Shield } from "lucide-react";
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
+  const { status: hunterStatus } = useHunterProfile();
 
   return (
     <motion.nav
@@ -36,9 +39,16 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           {user ? (
             <>
-              <Link to="/my-applications" className="text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2">
-                My Applications
-              </Link>
+              {hunterStatus === "approved" ? (
+                <Link to="/my-applications" className="text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2">
+                  My Applications
+                </Link>
+              ) : (
+                <Link to={hunterStatus === "pending" ? "/hunter-status" : "/become-hunter"} className="text-sm text-primary hover:text-primary/80 transition-colors px-3 py-2 flex items-center gap-1.5">
+                  <Shield className="w-3.5 h-3.5" />
+                  {hunterStatus === "pending" ? "Hunter Status" : "Become a Hunter"}
+                </Link>
+              )}
               <span className="text-sm text-muted-foreground hidden sm:inline truncate max-w-[150px]">
                 {user.email || user.phone}
               </span>

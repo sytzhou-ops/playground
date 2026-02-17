@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
+import { useHunterProfile } from "@/hooks/useHunterProfile";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import { DoodleStar, DoodleSquiggle, DoodleArrow } from "@/components/DoodleElements";
@@ -207,6 +208,7 @@ const ApplyBounty = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const { status: hunterStatus } = useHunterProfile();
   const { toast } = useToast();
   const [bounty, setBounty] = useState<Bounty | null>(null);
   const [bountyLoading, setBountyLoading] = useState(true);
@@ -222,6 +224,20 @@ const ApplyBounty = () => {
       navigate("/auth", { state: { returnTo: `/bounties/${id}/apply` } });
     }
   }, [user, authLoading, navigate, id]);
+
+  // Gate behind hunter approval
+  useEffect(() => {
+    if (hunterStatus === "none") {
+      toast({ title: "Become a Hunter first", description: "You need to be a verified hunter to apply for bounties." });
+      navigate("/become-hunter");
+    } else if (hunterStatus === "pending") {
+      toast({ title: "Application under review", description: "Your hunter profile is still being reviewed." });
+      navigate("/hunter-status");
+    } else if (hunterStatus === "rejected") {
+      toast({ title: "Not approved", description: "Your hunter application was not approved. You can reapply.", variant: "destructive" });
+      navigate("/hunter-status");
+    }
+  }, [hunterStatus, navigate, toast]);
 
   useEffect(() => {
     if (!id) return;

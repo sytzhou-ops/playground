@@ -217,6 +217,78 @@ export type Database = {
         }
         Relationships: []
       }
+      hunter_profiles: {
+        Row: {
+          admin_notes: string | null
+          ai_assessment: string | null
+          ai_score: number | null
+          bio: string
+          certifications: string | null
+          created_at: string
+          expertise_areas: string[]
+          full_name: string
+          github_url: string | null
+          id: string
+          linkedin_url: string | null
+          past_projects: string | null
+          portfolio_url: string | null
+          resume_path: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+          years_experience: number
+        }
+        Insert: {
+          admin_notes?: string | null
+          ai_assessment?: string | null
+          ai_score?: number | null
+          bio: string
+          certifications?: string | null
+          created_at?: string
+          expertise_areas?: string[]
+          full_name: string
+          github_url?: string | null
+          id?: string
+          linkedin_url?: string | null
+          past_projects?: string | null
+          portfolio_url?: string | null
+          resume_path?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+          years_experience?: number
+        }
+        Update: {
+          admin_notes?: string | null
+          ai_assessment?: string | null
+          ai_score?: number | null
+          bio?: string
+          certifications?: string | null
+          created_at?: string
+          expertise_areas?: string[]
+          full_name?: string
+          github_url?: string | null
+          id?: string
+          linkedin_url?: string | null
+          past_projects?: string | null
+          portfolio_url?: string | null
+          resume_path?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          years_experience?: number
+        }
+        Relationships: []
+      }
       scheduled_calls: {
         Row: {
           applicant_id: string
@@ -271,15 +343,42 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "hunter" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -406,6 +505,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "hunter", "user"],
+    },
   },
 } as const
