@@ -131,7 +131,9 @@ const Profile = () => {
           <div className="glass-strong rounded-2xl p-6 mb-4">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/40 to-accent/30 flex items-center justify-center text-2xl font-bold text-primary-foreground">
-                {(profile?.full_name || "U")[0].toUpperCase()}
+                {profile?.full_name?.trim()
+                  ? profile.full_name.trim().split(/\s+/).map(n => n[0]).join("").toUpperCase().slice(0, 2)
+                  : (user?.email?.[0] || "U").toUpperCase()}
               </div>
               <div>
                 <h2 className="text-lg font-bold text-foreground">{profile?.full_name || "User"}</h2>

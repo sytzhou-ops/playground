@@ -75,7 +75,9 @@ const Navbar = () => {
                   className="flex items-center gap-2 text-sm text-foreground/80 hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-secondary/50"
                 >
                   <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary/40 to-accent/30 flex items-center justify-center text-xs font-bold text-primary-foreground">
-                    {(profile?.full_name || "U")[0].toUpperCase()}
+                    {profile?.full_name?.trim()
+                      ? profile.full_name.trim().split(/\s+/).map(n => n[0]).join("").toUpperCase().slice(0, 2)
+                      : (user?.email?.[0] || "U").toUpperCase()}
                   </div>
                   <span className="hidden sm:inline max-w-[120px] truncate">{profile?.full_name || "Profile"}</span>
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${profileOpen ? "rotate-180" : ""}`} />
