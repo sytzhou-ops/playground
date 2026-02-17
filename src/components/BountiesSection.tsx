@@ -139,7 +139,7 @@ const BountiesSection = () => {
             </span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
-            Real problems, real budgets. Pick something to solve.
+            Real problems. Real budgets. Choose your bounty.
           </p>
         </motion.div>
 
