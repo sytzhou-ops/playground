@@ -16,8 +16,9 @@ const Index = () => {
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
   }, [hash]);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background bg-gradient-mesh noise-overlay">
       <Navbar />
       <HeroSection />
       <HowItWorks />
