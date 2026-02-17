@@ -42,7 +42,7 @@ const Auth = () => {
         });
         if (error) throw error;
         toast({ title: "Account created!", description: "You're now signed in." });
-        navigate(returnTo);
+        navigate("/onboarding");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;

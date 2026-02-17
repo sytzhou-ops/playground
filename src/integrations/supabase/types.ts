@@ -289,6 +289,54 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          city: string | null
+          company: string | null
+          country: string | null
+          created_at: string
+          date_of_birth: string | null
+          full_name: string
+          id: string
+          industry: string | null
+          job_title: string | null
+          linkedin_url: string | null
+          phone_number: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          city?: string | null
+          company?: string | null
+          country?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          full_name?: string
+          id?: string
+          industry?: string | null
+          job_title?: string | null
+          linkedin_url?: string | null
+          phone_number?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          city?: string | null
+          company?: string | null
+          country?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          full_name?: string
+          id?: string
+          industry?: string | null
+          job_title?: string | null
+          linkedin_url?: string | null
+          phone_number?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       scheduled_calls: {
         Row: {
           applicant_id: string

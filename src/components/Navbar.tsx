@@ -2,12 +2,14 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useHunterProfile } from "@/hooks/useHunterProfile";
+import { useProfile } from "@/hooks/useProfile";
 import { DoodleStar, DoodleSquiggle } from "./DoodleElements";
 import { Shield } from "lucide-react";
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const { status: hunterStatus } = useHunterProfile();
+  const { profile } = useProfile();
 
   return (
     <motion.nav
@@ -50,7 +52,7 @@ const Navbar = () => {
                 </Link>
               )}
               <span className="text-sm text-muted-foreground hidden sm:inline truncate max-w-[150px]">
-                {user.email || user.phone}
+                {profile?.full_name || user.email || user.phone}
               </span>
               <button
                 onClick={signOut}
