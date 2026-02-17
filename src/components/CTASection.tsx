@@ -31,9 +31,9 @@ const CTASection = () => {
             <Link to="/post-bounty" className="bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl text-lg glow-primary hover:opacity-90 transition-all">
               Post a Bounty
             </Link>
-            <button className="border border-border text-foreground hover:border-primary/40 px-8 py-4 rounded-xl text-lg transition-all">
-              Join as a Builder
-            </button>
+            <Link to="/become-hunter" className="border border-border text-foreground hover:border-primary/40 px-8 py-4 rounded-xl text-lg transition-all">
+              Join as a Bounty Hunter
+            </Link>
           </div>
         </motion.div>
       </div>
