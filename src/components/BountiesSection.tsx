@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { DoodleStar } from "./DoodleElements";
 
 interface BountyCardProps {
@@ -74,14 +73,9 @@ const bounties: BountyCardProps[] = [
 ];
 
 const BountyCard = ({ title, bounty, author, role, category, proposals, daysLeft, hot }: BountyCardProps) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    className="group relative bg-card border border-border rounded-2xl p-6 min-w-0 shrink-0"
-  >
+  <div className="relative bg-card border border-border rounded-2xl p-6 w-[340px] shrink-0 mt-4">
     {hot && (
-      <div className="absolute -top-3 right-4 flex items-center gap-1 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty">
+      <div className="absolute -top-3 right-4 flex items-center gap-1 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty z-10">
         <span>🔥</span> HOT
       </div>
     )}
@@ -118,27 +112,11 @@ const BountyCard = ({ title, bounty, author, role, category, proposals, daysLeft
         {proposals} proposals
       </span>
     </div>
-  </motion.div>
+  </div>
 );
 
 const BountiesSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const visibleCount = 3;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % bounties.length);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, []);
-
-  const getVisibleBounties = () => {
-    const result: BountyCardProps[] = [];
-    for (let i = 0; i < visibleCount; i++) {
-      result.push(bounties[(currentIndex + i) % bounties.length]);
-    }
-    return result;
-  };
+  const doubled = [...bounties, ...bounties];
 
   return (
     <section id="bounties" className="py-24 relative">
@@ -161,39 +139,26 @@ const BountiesSection = () => {
             Real problems. Real budgets. Choose your bounty.
           </p>
         </motion.div>
+      </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-hidden">
-          {getVisibleBounties().map((b, i) => (
-            <motion.div
-              key={`${currentIndex}-${i}`}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-            >
-              <BountyCard {...b} />
-            </motion.div>
+      {/* Continuous scroll marquee */}
+      <div className="relative overflow-hidden pt-2">
+        <div className="flex gap-6 animate-[marquee_30s_linear_infinite] hover:[animation-play-state:paused]">
+          {doubled.map((b, i) => (
+            <BountyCard key={i} {...b} />
           ))}
         </div>
+        {/* Fade edges */}
+        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
+      </div>
 
-        {/* Dot indicators */}
-        <div className="flex justify-center gap-2 mt-8">
-          {bounties.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentIndex(i)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                i === currentIndex ? "bg-primary w-6" : "bg-muted-foreground/30"
-              }`}
-            />
-          ))}
-        </div>
-
+      <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-10"
+          className="text-center mt-12"
         >
           <Link
             to="/bounties"
