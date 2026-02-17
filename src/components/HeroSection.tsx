@@ -1,52 +1,53 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { DoodleUnderline, DoodleArrow, DoodleStar, DoodleCircle } from "./DoodleElements";
+import { Orb, AISparkle, GridBackground } from "./DoodleElements";
+import { ArrowRight, Sparkles, Zap } from "lucide-react";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/* Doodle decorations */}
-      <DoodleStar className="absolute top-32 left-[10%] w-8 h-8 text-primary/30 animate-float" />
-      <DoodleStar className="absolute top-48 right-[15%] w-6 h-6 text-accent/30 animate-float" style={{ animationDelay: "1s" }} />
-      <DoodleCircle className="absolute bottom-32 left-[8%] w-16 h-16 text-primary/15 animate-wiggle" />
-      <DoodleStar className="absolute bottom-48 right-[10%] w-10 h-10 text-primary/20 animate-float" style={{ animationDelay: "2s" }} />
+      {/* Ambient orbs */}
+      <Orb className="w-[500px] h-[500px] -top-40 -left-40" color="primary" />
+      <Orb className="w-[400px] h-[400px] top-20 right-[-10%]" color="accent" />
+      <Orb className="w-[300px] h-[300px] bottom-10 left-[20%]" color="primary" />
+      
+      <GridBackground className="opacity-40" />
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: "radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)",
-        backgroundSize: "30px 30px"
-      }} />
+      {/* Floating sparkles */}
+      <AISparkle className="absolute top-32 left-[12%] w-4 h-4 text-primary/40 animate-float" />
+      <AISparkle className="absolute top-48 right-[18%] w-3 h-3 text-accent/40 animate-float" style={{ animationDelay: "1s" }} />
+      <AISparkle className="absolute bottom-40 left-[8%] w-5 h-5 text-primary/25 animate-float" style={{ animationDelay: "2s" }} />
+      <AISparkle className="absolute bottom-60 right-[8%] w-3 h-3 text-accent/30 animate-float" style={{ animationDelay: "3s" }} />
 
       <div className="container mx-auto px-6 text-center relative z-10">
+        {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6 }}
         >
-          <span className="inline-block font-doodle text-2xl text-primary mb-4 animate-wiggle">
-            ~ the marketplace for ~
+          <span className="inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase text-primary border border-primary/20 rounded-full px-5 py-2 glass mb-8">
+            <Sparkles className="w-3.5 h-3.5" />
+            The AI Bounty Marketplace
           </span>
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.95] mb-6"
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[1.05] mb-6"
         >
           <span className="text-foreground">Real Problems.</span>
           <br />
-          <span className="relative inline-block">
-            <span className="text-gradient-primary">AI Solutions.</span>
-            <DoodleUnderline className="absolute -bottom-2 left-0 w-full text-primary" />
-          </span>
+          <span className="text-gradient-primary">AI Solutions.</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+          transition={{ duration: 0.7, delay: 0.35 }}
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
         >
           Post your automation challenge with a bounty. 
           AI builders compete to solve it. You only pay for results.
@@ -55,43 +56,53 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
+          transition={{ duration: 0.7, delay: 0.55 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link to="/post-bounty" className="group relative bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl text-lg glow-primary hover:opacity-90 transition-all">
+          <Link
+            to="/post-bounty"
+            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold px-8 py-4 rounded-2xl text-lg glow-primary hover:shadow-[0_0_60px_-10px_hsl(270_95%_65%_/_0.6)] transition-all duration-300"
+          >
+            <Zap className="w-5 h-5" />
             Post a Bounty
-            <span className="font-doodle text-sm ml-2 opacity-70">— it's free!</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link to="/bounties" className="flex items-center gap-2 text-muted-foreground hover:text-foreground px-8 py-4 rounded-xl border border-border hover:border-muted-foreground/30 transition-all">
+          <Link
+            to="/bounties"
+            className="inline-flex items-center gap-2 text-foreground/80 hover:text-foreground px-8 py-4 rounded-2xl glass hover:border-primary/30 transition-all duration-300"
+          >
             Browse Bounties
-            <DoodleArrow className="w-10 h-5 text-primary" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link to="/become-hunter" className="text-muted-foreground hover:text-foreground px-8 py-4 rounded-xl border border-border hover:border-muted-foreground/30 transition-all">
-            Join as a Bounty Hunter
+          <Link
+            to="/become-hunter"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground px-8 py-4 rounded-2xl border border-border hover:border-accent/30 transition-all duration-300"
+          >
+            <Sparkles className="w-4 h-4 text-accent" />
+            Join as a Hunter
           </Link>
         </motion.div>
 
-        {/* Social proof */}
+        {/* Stats bar */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 1 }}
-          className="mt-16 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
+          transition={{ duration: 1, delay: 0.9 }}
+          className="mt-20 inline-flex items-center gap-8 glass rounded-2xl px-10 py-5"
         >
-          <div className="flex items-center gap-2">
-            <span className="font-doodle text-xl text-primary">✓</span>
-            <span>$2.4M+ in bounties posted</span>
-          </div>
-          <div className="w-px h-4 bg-border hidden sm:block" />
-          <div className="flex items-center gap-2">
-            <span className="font-doodle text-xl text-primary">✓</span>
-            <span>850+ problems solved</span>
-          </div>
-          <div className="w-px h-4 bg-border hidden sm:block" />
-          <div className="flex items-center gap-2">
-            <span className="font-doodle text-xl text-primary">✓</span>
-            <span>4.9★ avg satisfaction</span>
-          </div>
+          {[
+            { value: "$2.4M+", label: "Bounties Posted" },
+            { value: "850+", label: "Problems Solved" },
+            { value: "4.9★", label: "Avg Satisfaction" },
+          ].map((stat, i) => (
+            <div key={stat.label} className="flex items-center gap-4">
+              {i > 0 && <div className="w-px h-8 bg-border" />}
+              <div className="text-left">
+                <p className="text-lg font-bold text-gradient-primary">{stat.value}</p>
+                <p className="text-xs text-muted-foreground">{stat.label}</p>
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
