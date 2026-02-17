@@ -73,10 +73,10 @@ const bounties: BountyCardProps[] = [
 ];
 
 const BountyCard = ({ title, bounty, author, role, category, proposals, daysLeft, hot }: BountyCardProps) => (
-  <div className="relative bg-card border border-border rounded-lg p-6 w-[340px] shrink-0 mt-4">
+  <div className="relative bg-card border border-border rounded-2xl p-6 w-[340px] shrink-0 mt-4">
     {hot && (
-      <div className="absolute -top-3 right-4 flex items-center gap-1 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty z-10 font-western tracking-wide">
-        <span>🔥</span> WANTED
+      <div className="absolute -top-3 right-4 flex items-center gap-1 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty z-10">
+        <span>🔥</span> HOT
       </div>
     )}
 
@@ -93,7 +93,7 @@ const BountyCard = ({ title, bounty, author, role, category, proposals, daysLeft
 
     <div className="flex items-center justify-between">
       <div>
-        <span className="font-western text-2xl text-primary">{bounty}</span>
+        <span className="font-doodle text-3xl text-accent font-bold">{bounty}</span>
         <span className="text-xs text-muted-foreground ml-2">bounty</span>
       </div>
     </div>
@@ -127,16 +127,16 @@ const BountiesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="font-western text-sm tracking-[0.3em] text-primary/60 uppercase">★ Open Contracts ★</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-3 text-foreground">
-            <span className="font-western">Bounty{" "}</span>
-            <span className="relative inline-block font-western">
+          <span className="font-doodle text-2xl text-primary">~ choose your challenge ~</span>
+          <h2 className="text-4xl md:text-5xl font-bold mt-2 text-foreground">
+            Bounty{" "}
+            <span className="relative inline-block">
               Wall
               <DoodleStar className="absolute -top-3 -right-6 w-5 h-5 text-accent animate-wiggle" />
             </span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
-            Real problems. Real rewards. Pick your bounty, hunter.
+            Real problems. Real budgets. Pick your bounty.
           </p>
         </motion.div>
       </div>
@@ -162,9 +162,9 @@ const BountiesSection = () => {
         >
           <Link
             to="/bounties"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors text-base border border-primary/50 glow-primary"
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-full hover:bg-primary/90 transition-colors text-base"
           >
-            <span className="font-western tracking-wide">View all bounties</span> →
+            View all bounties →
           </Link>
         </motion.div>
       </div>

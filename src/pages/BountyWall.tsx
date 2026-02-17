@@ -176,14 +176,13 @@ const BountyWall = () => {
       <main className="container max-w-5xl mx-auto px-4 pt-28 pb-16">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
-          <span className="font-western text-sm tracking-[0.3em] text-primary/60 uppercase block mb-2">★ Open Contracts ★</span>
-          <h1 className="text-3xl md:text-4xl font-western font-bold text-foreground mb-2">
-            Bounty <span className="text-gradient-ai">Wall</span>
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
+            Bounty <span className="text-gradient-primary">Wall</span>
           </h1>
-          <p className="text-muted-foreground text-base mb-6">real problems, real rewards</p>
+          <p className="text-muted-foreground font-doodle text-xl mb-6">real problems, real rewards</p>
           <Link to="/post-bounty">
-            <Button className="gap-2 glow-primary border border-primary/50">
-              <Plus className="w-4 h-4" /> <span className="font-western tracking-wide">Post a Bounty</span>
+            <Button className="gap-2 glow-primary">
+              <Plus className="w-4 h-4" /> Post a Bounty
             </Button>
           </Link>
         </motion.div>
