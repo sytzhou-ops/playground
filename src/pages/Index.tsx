@@ -11,9 +11,13 @@ const Index = () => {
   const { hash } = useLocation();
 
   useEffect(() => {
-    if (hash) {
-      const el = document.querySelector(hash);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (hash && !hash.includes("=")) {
+      try {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      } catch {
+        // Ignore invalid selectors (e.g. OAuth token fragments)
+      }
     }
   }, [hash]);
 
