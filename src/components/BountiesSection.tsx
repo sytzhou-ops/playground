@@ -130,11 +130,11 @@ const BountiesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="font-doodle text-2xl text-primary">~ live bounties ~</span>
+          <span className="font-doodle text-2xl text-primary">~ the bounty board ~</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-2 text-foreground">
-            Live{" "}
+            The Bounty{" "}
             <span className="relative inline-block">
-              Bounties
+              Board
               <DoodleStar className="absolute -top-3 -right-6 w-5 h-5 text-accent animate-wiggle" />
             </span>
           </h2>
