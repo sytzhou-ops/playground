@@ -8,25 +8,29 @@ const OAuthCallback = () => {
   const hasRedirected = useRef(false);
 
   useEffect(() => {
-    // Wait until we have a session (OAuth handler has finished)
-    if (hasRedirected.current) return;
+    console.log("[OAuthCallback] state:", { session: !!session, loading, hasRedirected: hasRedirected.current });
     
+    if (hasRedirected.current) return;
+
     if (session) {
       hasRedirected.current = true;
       const returnTo = localStorage.getItem("auth_return_to") || "/";
       localStorage.removeItem("auth_return_to");
+      console.log("[OAuthCallback] Redirecting to:", returnTo);
       navigate(returnTo, { replace: true });
       return;
     }
 
-    // If loading is done and still no session after a timeout, redirect to auth
-    if (!loading && !session) {
+    // Fallback: if no session after 8 seconds, go to home page
+    // (the lovable handler may have already set the session before React mounted)
+    if (!loading) {
       const fallback = setTimeout(() => {
         if (!hasRedirected.current) {
           hasRedirected.current = true;
-          navigate("/auth", { replace: true });
+          console.log("[OAuthCallback] Fallback redirect to /");
+          navigate("/", { replace: true });
         }
-      }, 5000);
+      }, 8000);
       return () => clearTimeout(fallback);
     }
   }, [session, loading, navigate]);

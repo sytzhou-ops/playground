@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { Session, User } from "@supabase/supabase-js";
-import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 interface AuthContextType {
@@ -20,23 +19,13 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("[useAuth] onAuthStateChange:", event, !!session);
       setSession(session);
       setLoading(false);
-
-      // After OAuth sign-in, redirect to stored return path
-      if ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) {
-        const returnTo = localStorage.getItem("auth_return_to");
-        if (returnTo) {
-          localStorage.removeItem("auth_return_to");
-          setTimeout(() => {
-            navigate(returnTo, { replace: true });
-          }, 0);
-        }
-      }
     });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -45,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, []);
 
   const signOut = async () => {
     await supabase.auth.signOut();
