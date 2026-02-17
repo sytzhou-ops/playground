@@ -36,6 +36,9 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           {user ? (
             <>
+              <Link to="/my-applications" className="text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2">
+                My Applications
+              </Link>
               <span className="text-sm text-muted-foreground hidden sm:inline truncate max-w-[150px]">
                 {user.email || user.phone}
               </span>

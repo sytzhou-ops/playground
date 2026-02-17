@@ -10,6 +10,9 @@ import PostBounty from "./pages/PostBounty";
 import BountyAnalysis from "./pages/BountyAnalysis";
 import BountyWall from "./pages/BountyWall";
 import BountyDetail from "./pages/BountyDetail";
+import ApplyBounty from "./pages/ApplyBounty";
+import BountyApplications from "./pages/BountyApplications";
+import MyApplications from "./pages/MyApplications";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +31,9 @@ const App = () => (
             <Route path="/bounty-analysis" element={<BountyAnalysis />} />
             <Route path="/bounties" element={<BountyWall />} />
             <Route path="/bounties/:id" element={<BountyDetail />} />
+            <Route path="/bounties/:id/apply" element={<ApplyBounty />} />
+            <Route path="/bounties/:id/applications" element={<BountyApplications />} />
+            <Route path="/my-applications" element={<MyApplications />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
