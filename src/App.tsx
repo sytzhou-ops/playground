@@ -15,6 +15,7 @@ import BountyApplications from "./pages/BountyApplications";
 import MyApplications from "./pages/MyApplications";
 import BecomeHunter from "./pages/BecomeHunter";
 import HunterStatus from "./pages/HunterStatus";
+import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/my-applications" element={<MyApplications />} />
             <Route path="/become-hunter" element={<BecomeHunter />} />
             <Route path="/hunter-status" element={<HunterStatus />} />
+            <Route path="/onboarding" element={<Onboarding />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
