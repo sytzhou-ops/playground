@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { Session, User } from "@supabase/supabase-js";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 interface AuthContextType {
@@ -19,6 +20,7 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -30,9 +32,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const returnTo = localStorage.getItem("auth_return_to");
         if (returnTo) {
           localStorage.removeItem("auth_return_to");
-          // Use setTimeout to let React finish rendering before navigating
           setTimeout(() => {
-            window.location.replace(returnTo);
+            navigate(returnTo, { replace: true });
           }, 0);
         }
       }
@@ -44,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
