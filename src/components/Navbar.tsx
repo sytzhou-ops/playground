@@ -1,15 +1,28 @@
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useHunterProfile } from "@/hooks/useHunterProfile";
 import { useProfile } from "@/hooks/useProfile";
 import { DoodleStar, DoodleSquiggle } from "./DoodleElements";
-import { Shield } from "lucide-react";
+import { Shield, ChevronDown } from "lucide-react";
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const { status: hunterStatus } = useHunterProfile();
   const { profile } = useProfile();
+  const [profileOpen, setProfileOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   return (
     <motion.nav
@@ -51,15 +64,31 @@ const Navbar = () => {
                   {hunterStatus === "pending" ? "Hunter Status" : "Become a Hunter"}
                 </Link>
               )}
-              <span className="text-sm text-muted-foreground hidden sm:inline truncate max-w-[150px]">
-                {profile?.full_name || user.email || user.phone}
-              </span>
-              <button
-                onClick={signOut}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2"
-              >
-                Log out
-              </button>
+
+              {/* Profile dropdown */}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setProfileOpen(!profileOpen)}
+                  className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2"
+                >
+                  {profile?.full_name || "Profile"}
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${profileOpen ? "rotate-180" : ""}`} />
+                </button>
+                {profileOpen && (
+                  <div className="absolute right-0 mt-1 w-56 rounded-lg border border-border bg-card shadow-lg py-2 z-50">
+                    <div className="px-3 py-2 border-b border-border">
+                      <p className="text-xs text-muted-foreground truncate">{user.email || user.phone}</p>
+                    </div>
+                    <button
+                      onClick={() => { setProfileOpen(false); signOut(); }}
+                      className="w-full text-left px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                    >
+                      Log out
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <Link to="/post-bounty" className="relative text-sm font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity">
                 Post a Bounty
                 <DoodleSquiggle className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 text-primary opacity-40" />
