@@ -13,6 +13,8 @@ import BountyDetail from "./pages/BountyDetail";
 import ApplyBounty from "./pages/ApplyBounty";
 import BountyApplications from "./pages/BountyApplications";
 import MyApplications from "./pages/MyApplications";
+import BecomeHunter from "./pages/BecomeHunter";
+import HunterStatus from "./pages/HunterStatus";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +36,8 @@ const App = () => (
             <Route path="/bounties/:id/apply" element={<ApplyBounty />} />
             <Route path="/bounties/:id/applications" element={<BountyApplications />} />
             <Route path="/my-applications" element={<MyApplications />} />
+            <Route path="/become-hunter" element={<BecomeHunter />} />
+            <Route path="/hunter-status" element={<HunterStatus />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
