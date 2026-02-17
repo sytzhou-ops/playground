@@ -21,9 +21,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
       setLoading(false);
+
+      // After OAuth sign-in, redirect to stored return path
+      if ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) {
+        const returnTo = localStorage.getItem("auth_return_to");
+        if (returnTo) {
+          localStorage.removeItem("auth_return_to");
+          // Use setTimeout to let React finish rendering before navigating
+          setTimeout(() => {
+            window.location.replace(returnTo);
+          }, 0);
+        }
+      }
     });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
