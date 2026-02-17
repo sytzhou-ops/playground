@@ -130,7 +130,7 @@ const BountiesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="font-doodle text-2xl text-primary">~ the bounty board ~</span>
+          <span className="font-doodle text-2xl text-primary">~ choose your challenge ~</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-2 text-foreground">
             The Bounty{" "}
             <span className="relative inline-block">
