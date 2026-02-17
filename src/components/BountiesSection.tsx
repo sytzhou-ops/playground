@@ -129,9 +129,9 @@ const BountiesSection = () => {
         >
           <span className="font-doodle text-2xl text-primary">~ choose your challenge ~</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-2 text-foreground">
-            The Bounty{" "}
+            Bounty{" "}
             <span className="relative inline-block">
-              Board
+              Wall
               <DoodleStar className="absolute -top-3 -right-6 w-5 h-5 text-accent animate-wiggle" />
             </span>
           </h2>
