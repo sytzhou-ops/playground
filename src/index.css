@@ -69,6 +69,7 @@
     @apply font-display;
     letter-spacing: 0.01em;
     word-spacing: 0.05em;
+    line-height: 1.15;
   }
 }
 
