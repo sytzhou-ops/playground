@@ -30,7 +30,7 @@ const CTASection = () => {
             <h2 className="text-4xl md:text-6xl font-extrabold text-foreground mb-6">
               Got a problem? Get it
               <br />
-              <span className="text-gradient-primary">solved</span>
+              <span className="text-gradient-primary">solved.</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto mb-12 text-lg">
               Whether you're a business owner drowning in manual work or an AI builder looking for real impact — this is where it starts.
