@@ -132,14 +132,14 @@ const BountiesSection = () => {
         >
           <span className="font-doodle text-2xl text-primary">~ live bounties ~</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-2 text-foreground">
-            Problems waiting to be{" "}
+            Live{" "}
             <span className="relative inline-block">
-              solved
+              Bounties
               <DoodleStar className="absolute -top-3 -right-6 w-5 h-5 text-accent animate-wiggle" />
             </span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
-            Real businesses, real budgets. Pick a problem and start building.
+            Real problems, real budgets. Pick something to solve.
           </p>
         </motion.div>
 
