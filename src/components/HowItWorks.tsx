@@ -6,7 +6,7 @@ const steps = [
   {
     number: "01",
     title: "Describe your problem",
-    description: "Tell us what manual work eats your time. No tech jargon needed — just describe the pain.",
+    description: "Describe your challenge in plain English. Tell us what manual work eats your time.",
     icon: MessageSquare,
     gradient: "from-primary/20 to-primary/5",
   },
