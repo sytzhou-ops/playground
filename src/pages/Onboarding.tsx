@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { DoodleStar, DoodleSquiggle } from "@/components/DoodleElements";
+import { Orb, AISparkle, GridBackground } from "@/components/DoodleElements";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
-import { User, Briefcase, MapPin, Calendar } from "lucide-react";
+import { User, Briefcase, MapPin, Sparkles, ArrowRight } from "lucide-react";
 
 const INDUSTRIES = [
   "Technology", "Finance", "Healthcare", "Education", "Marketing",
@@ -16,11 +16,19 @@ const INDUSTRIES = [
   "Manufacturing", "Media", "Non-profit", "Other",
 ];
 
+const SectionHeader = ({ icon: Icon, label }: { icon: any; label: string }) => (
+  <div className="flex items-center gap-2.5 text-sm font-semibold text-foreground mb-1">
+    <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
+      <Icon className="w-3.5 h-3.5 text-primary" />
+    </div>
+    {label}
+  </div>
+);
+
 const Onboarding = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
-
   const [fullName, setFullName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -64,150 +72,88 @@ const Onboarding = () => {
     }
   };
 
+  const inputClass = "bg-secondary/50 border-border/50 focus:border-primary/50";
+  const selectClass = "flex h-10 w-full rounded-md border border-border/50 bg-secondary/50 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4 relative overflow-hidden py-12">
-      <DoodleStar className="absolute top-20 left-10 w-8 h-8 text-primary opacity-20 animate-float" />
-      <DoodleSquiggle className="absolute bottom-20 right-20 w-32 text-accent opacity-10" />
+    <div className="min-h-screen bg-background bg-gradient-mesh flex items-center justify-center px-4 relative overflow-hidden py-12">
+      <Orb className="w-[400px] h-[400px] -top-32 left-[-10%]" color="primary" />
+      <Orb className="w-[300px] h-[300px] bottom-0 right-[-5%]" color="accent" />
+      <GridBackground className="opacity-30" />
+
+      <AISparkle className="absolute top-20 left-[12%] w-4 h-4 text-primary/30 animate-float" />
+      <AISparkle className="absolute bottom-24 right-[15%] w-3 h-3 text-accent/25 animate-float" style={{ animationDelay: "2s" }} />
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-lg"
+        className="w-full max-w-lg relative z-10"
       >
         <div className="text-center mb-8">
-          <DoodleStar className="w-8 h-8 text-primary animate-wiggle mx-auto mb-3" />
-          <h1 className="text-2xl font-bold text-foreground">Tell us about yourself</h1>
-          <p className="text-muted-foreground mt-2 text-sm">
-            Complete your profile to get started
-          </p>
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center mx-auto mb-4">
+            <Sparkles className="w-6 h-6 text-primary" />
+          </div>
+          <h1 className="text-2xl font-display font-extrabold text-foreground">Tell us about yourself</h1>
+          <p className="text-muted-foreground mt-2 text-sm">Complete your profile to get started</p>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-6">
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Personal Info */}
-            <div className="flex items-center gap-2 text-sm font-semibold text-foreground mb-1">
-              <User className="w-4 h-4 text-primary" />
-              Personal Info
-            </div>
-
+        <div className="glass-strong rounded-2xl p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <SectionHeader icon={User} label="Personal Info" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="fullName">Full Name *</Label>
-                <Input
-                  id="fullName"
-                  placeholder="Jane Doe"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                  maxLength={100}
-                />
+                <Input id="fullName" placeholder="Jane Doe" value={fullName} onChange={(e) => setFullName(e.target.value)} required maxLength={100} className={inputClass} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="dob">Date of Birth</Label>
-                <Input
-                  id="dob"
-                  type="date"
-                  value={dateOfBirth}
-                  onChange={(e) => setDateOfBirth(e.target.value)}
-                />
+                <Input id="dob" type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} className={inputClass} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone Number</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="+1 (555) 000-0000"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  maxLength={20}
-                />
+                <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} maxLength={20} className={inputClass} />
               </div>
             </div>
 
-            {/* Location */}
-            <div className="flex items-center gap-2 text-sm font-semibold text-foreground mb-1 pt-2">
-              <MapPin className="w-4 h-4 text-primary" />
-              Location
-            </div>
+            <SectionHeader icon={MapPin} label="Location" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="city">City</Label>
-                <Input
-                  id="city"
-                  placeholder="San Francisco"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  maxLength={100}
-                />
+                <Label>City</Label>
+                <Input placeholder="San Francisco" value={city} onChange={(e) => setCity(e.target.value)} maxLength={100} className={inputClass} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="country">Country</Label>
-                <Input
-                  id="country"
-                  placeholder="United States"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  maxLength={100}
-                />
+                <Label>Country</Label>
+                <Input placeholder="United States" value={country} onChange={(e) => setCountry(e.target.value)} maxLength={100} className={inputClass} />
               </div>
             </div>
 
-            {/* Professional */}
-            <div className="flex items-center gap-2 text-sm font-semibold text-foreground mb-1 pt-2">
-              <Briefcase className="w-4 h-4 text-primary" />
-              Professional
-            </div>
+            <SectionHeader icon={Briefcase} label="Professional" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="jobTitle">Job Title</Label>
-                <Input
-                  id="jobTitle"
-                  placeholder="Product Manager"
-                  value={jobTitle}
-                  onChange={(e) => setJobTitle(e.target.value)}
-                  maxLength={100}
-                />
+                <Label>Job Title</Label>
+                <Input placeholder="Product Manager" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} maxLength={100} className={inputClass} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="company">Company</Label>
-                <Input
-                  id="company"
-                  placeholder="Acme Inc."
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  maxLength={100}
-                />
+                <Label>Company</Label>
+                <Input placeholder="Acme Inc." value={company} onChange={(e) => setCompany(e.target.value)} maxLength={100} className={inputClass} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="industry">Industry</Label>
-                <select
-                  id="industry"
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
+                <Label>Industry</Label>
+                <select value={industry} onChange={(e) => setIndustry(e.target.value)} className={selectClass}>
                   <option value="">Select industry</option>
-                  {INDUSTRIES.map((ind) => (
-                    <option key={ind} value={ind}>{ind}</option>
-                  ))}
+                  {INDUSTRIES.map((ind) => <option key={ind} value={ind}>{ind}</option>)}
                 </select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="linkedin">LinkedIn URL</Label>
-                <Input
-                  id="linkedin"
-                  type="url"
-                  placeholder="https://linkedin.com/in/..."
-                  value={linkedinUrl}
-                  onChange={(e) => setLinkedinUrl(e.target.value)}
-                  maxLength={255}
-                />
+                <Label>LinkedIn URL</Label>
+                <Input type="url" placeholder="https://linkedin.com/in/..." value={linkedinUrl} onChange={(e) => setLinkedinUrl(e.target.value)} maxLength={255} className={inputClass} />
               </div>
             </div>
 
-            <Button type="submit" className="w-full mt-4" disabled={loading}>
+            <Button type="submit" className="w-full bg-gradient-to-r from-primary to-primary/80 hover:shadow-[0_0_30px_-8px_hsl(270_95%_65%_/_0.5)] transition-all duration-300 gap-2" disabled={loading}>
               {loading ? "Saving..." : "Complete Profile"}
+              {!loading && <ArrowRight className="w-4 h-4" />}
             </Button>
           </form>
         </div>
