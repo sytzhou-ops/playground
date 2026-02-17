@@ -14,12 +14,12 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl"
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <DoodleStar className="w-6 h-6 text-primary animate-wiggle" />
           <span className="text-xl font-bold text-foreground">
             bounty<span className="text-primary">AI</span>
           </span>
-        </div>
+        </Link>
 
         <div className="hidden md:flex items-center gap-8">
           <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
