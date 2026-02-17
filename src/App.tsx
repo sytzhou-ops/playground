@@ -45,6 +45,8 @@ const App = () => (
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
+            {/* OAuth callback route — shows loading while the handler processes */}
+            <Route path="/~oauth" element={<div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Signing you in...</p></div>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
