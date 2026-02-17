@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import "@/integrations/lovable"; // Initialize OAuth callback handler early
+import OAuthCallback from "./components/OAuthCallback";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import PostBounty from "./pages/PostBounty";
@@ -46,7 +47,7 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
             {/* OAuth callback route — shows loading while the handler processes */}
-            <Route path="/~oauth" element={<div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Signing you in...</p></div>} />
+            <Route path="/~oauth" element={<OAuthCallback />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
