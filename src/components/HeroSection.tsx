@@ -66,6 +66,9 @@ const HeroSection = () => {
             Browse Bounties
             <DoodleArrow className="w-10 h-5 text-primary" />
           </Link>
+          <Link to="/become-hunter" className="text-muted-foreground hover:text-foreground px-8 py-4 rounded-xl border border-border hover:border-muted-foreground/30 transition-all">
+            Join as a Bounty Hunter
+          </Link>
         </motion.div>
 
         {/* Social proof */}
