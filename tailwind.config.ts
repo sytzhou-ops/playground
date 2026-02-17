@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Syne", "sans-serif"],
+        display: ["Space Grotesk", "sans-serif"],
         body: ["Outfit", "sans-serif"],
         mono: ["Space Mono", "monospace"],
         doodle: ["Space Mono", "monospace"],
