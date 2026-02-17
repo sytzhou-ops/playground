@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { DoodleStar } from "./DoodleElements";
 
 interface BountyCardProps {
@@ -72,52 +73,54 @@ const bounties: BountyCardProps[] = [
 ];
 
 const BountyCard = ({ title, bounty, author, role, category, proposals, daysLeft, hot }: BountyCardProps) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    whileHover={{ y: -4 }}
-    className="group relative bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all cursor-pointer"
-  >
-    {hot && (
-      <div className="absolute -top-3 right-4 flex items-center gap-1 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty">
-        <span>🔥</span> HOT
-      </div>
-    )}
-
-    <div className="flex items-start justify-between mb-4">
-      <span className="text-xs font-medium text-muted-foreground bg-secondary px-3 py-1 rounded-full">
-        {category}
-      </span>
-      <span className="text-xs text-muted-foreground">{daysLeft}d left</span>
-    </div>
-
-    <h3 className="text-foreground font-semibold mb-4 leading-snug group-hover:text-primary/90 transition-colors">
-      {title}
-    </h3>
-
-    <div className="flex items-center justify-between">
-      <div>
-        <span className="font-doodle text-3xl text-accent font-bold">{bounty}</span>
-        <span className="text-xs text-muted-foreground ml-2">bounty</span>
-      </div>
-    </div>
-
-    <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-xs font-semibold text-secondary-foreground">
-          {author[0]}
+  <Link to="/bounties" className="block">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -4 }}
+      className="group relative bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all cursor-pointer"
+    >
+      {hot && (
+        <div className="absolute -top-3 right-4 flex items-center gap-1 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty">
+          <span>🔥</span> HOT
         </div>
+      )}
+
+      <div className="flex items-start justify-between mb-4">
+        <span className="text-xs font-medium text-muted-foreground bg-secondary px-3 py-1 rounded-full">
+          {category}
+        </span>
+        <span className="text-xs text-muted-foreground">{daysLeft}d left</span>
+      </div>
+
+      <h3 className="text-foreground font-semibold mb-4 leading-snug group-hover:text-primary/90 transition-colors">
+        {title}
+      </h3>
+
+      <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-medium text-foreground">{author}</p>
-          <p className="text-[10px] text-muted-foreground">{role}</p>
+          <span className="font-doodle text-3xl text-accent font-bold">{bounty}</span>
+          <span className="text-xs text-muted-foreground ml-2">bounty</span>
         </div>
       </div>
-      <span className="text-xs text-muted-foreground">
-        {proposals} proposals
-      </span>
-    </div>
-  </motion.div>
+
+      <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-xs font-semibold text-secondary-foreground">
+            {author[0]}
+          </div>
+          <div>
+            <p className="text-xs font-medium text-foreground">{author}</p>
+            <p className="text-[10px] text-muted-foreground">{role}</p>
+          </div>
+        </div>
+        <span className="text-xs text-muted-foreground">
+          {proposals} proposals
+        </span>
+      </div>
+    </motion.div>
+  </Link>
 );
 
 const BountiesSection = () => {
@@ -155,9 +158,9 @@ const BountiesSection = () => {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <button className="text-sm text-primary hover:text-primary/80 font-medium transition-colors">
+          <Link to="/bounties" className="text-sm text-primary hover:text-primary/80 font-medium transition-colors">
             View all bounties →
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>
