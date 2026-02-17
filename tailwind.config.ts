@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         doodle: ["Caveat", "cursive"],
+        western: ["Rye", "serif"],
         display: ["Space Grotesk", "sans-serif"],
         body: ["Space Grotesk", "sans-serif"],
       },
