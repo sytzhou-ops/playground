@@ -62,10 +62,10 @@ const HeroSection = () => {
             Post a Bounty
             <span className="font-doodle text-sm ml-2 opacity-70">— it's free!</span>
           </Link>
-          <button className="flex items-center gap-2 text-muted-foreground hover:text-foreground px-8 py-4 rounded-xl border border-border hover:border-muted-foreground/30 transition-all">
+          <Link to="/bounties" className="flex items-center gap-2 text-muted-foreground hover:text-foreground px-8 py-4 rounded-xl border border-border hover:border-muted-foreground/30 transition-all">
             Browse Bounties
             <DoodleArrow className="w-10 h-5 text-primary" />
-          </button>
+          </Link>
         </motion.div>
 
         {/* Social proof */}
