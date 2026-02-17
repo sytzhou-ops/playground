@@ -1,29 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
 const OAuthCallback = () => {
   const { session, loading } = useAuth();
   const navigate = useNavigate();
+  const hasRedirected = useRef(false);
 
   useEffect(() => {
-    if (loading) return;
-
-    // Once we have a session (or loading is done), redirect
-    const returnTo = localStorage.getItem("auth_return_to") || "/";
-    localStorage.removeItem("auth_return_to");
-
-    // Small delay to let session fully propagate
-    const timer = setTimeout(() => {
+    // Wait until we have a session (OAuth handler has finished)
+    if (hasRedirected.current) return;
+    
+    if (session) {
+      hasRedirected.current = true;
+      const returnTo = localStorage.getItem("auth_return_to") || "/";
+      localStorage.removeItem("auth_return_to");
       navigate(returnTo, { replace: true });
-    }, 500);
+      return;
+    }
 
-    return () => clearTimeout(timer);
+    // If loading is done and still no session after a timeout, redirect to auth
+    if (!loading && !session) {
+      const fallback = setTimeout(() => {
+        if (!hasRedirected.current) {
+          hasRedirected.current = true;
+          navigate("/auth", { replace: true });
+        }
+      }, 5000);
+      return () => clearTimeout(fallback);
+    }
   }, [session, loading, navigate]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">
-      <p className="text-muted-foreground">Signing you in...</p>
+      <p className="text-muted-foreground animate-pulse">Signing you in...</p>
     </div>
   );
 };
