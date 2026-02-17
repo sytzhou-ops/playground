@@ -75,16 +75,40 @@ const Navbar = () => {
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${profileOpen ? "rotate-180" : ""}`} />
                 </button>
                 {profileOpen && (
-                  <div className="absolute right-0 mt-1 w-56 rounded-lg border border-border bg-card shadow-lg py-2 z-50">
+                  <div className="absolute right-0 mt-1 w-56 rounded-lg border border-border bg-card shadow-lg py-1 z-50">
                     <div className="px-3 py-2 border-b border-border">
+                      <p className="text-sm font-medium text-foreground truncate">{profile?.full_name || "User"}</p>
                       <p className="text-xs text-muted-foreground truncate">{user.email || user.phone}</p>
                     </div>
-                    <button
-                      onClick={() => { setProfileOpen(false); signOut(); }}
-                      className="w-full text-left px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                    <Link
+                      to="/profile"
+                      onClick={() => setProfileOpen(false)}
+                      className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
                     >
-                      Log out
-                    </button>
+                      View Profile
+                    </Link>
+                    <Link
+                      to="/settings"
+                      onClick={() => setProfileOpen(false)}
+                      className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                    >
+                      Settings
+                    </Link>
+                    <Link
+                      to="/my-applications"
+                      onClick={() => setProfileOpen(false)}
+                      className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                    >
+                      My Applications
+                    </Link>
+                    <div className="border-t border-border mt-1 pt-1">
+                      <button
+                        onClick={() => { setProfileOpen(false); signOut(); }}
+                        className="w-full text-left px-3 py-2 text-sm text-destructive hover:bg-secondary transition-colors"
+                      >
+                        Log out
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
