@@ -25,15 +25,15 @@ const Navbar = () => {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             How it works
-          </a>
+          </Link>
           <Link to="/bounties" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Bounties
           </Link>
-          <a href="#categories" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/#categories" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Categories
-          </a>
+          </Link>
         </div>
 
         <div className="flex items-center gap-3">
