@@ -14,6 +14,125 @@ export type Database = {
   }
   public: {
     Tables: {
+      agreements: {
+        Row: {
+          agreed_amount: number
+          agreed_scope: string
+          agreed_timeline: string
+          applicant_accepted: boolean
+          applicant_id: string
+          application_id: string
+          bounty_id: string
+          created_at: string
+          id: string
+          poster_accepted: boolean
+          poster_id: string
+          status: string
+          stripe_payment_intent_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          agreed_amount: number
+          agreed_scope: string
+          agreed_timeline: string
+          applicant_accepted?: boolean
+          applicant_id: string
+          application_id: string
+          bounty_id: string
+          created_at?: string
+          id?: string
+          poster_accepted?: boolean
+          poster_id: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          agreed_amount?: number
+          agreed_scope?: string
+          agreed_timeline?: string
+          applicant_accepted?: boolean
+          applicant_id?: string
+          application_id?: string
+          bounty_id?: string
+          created_at?: string
+          id?: string
+          poster_accepted?: boolean
+          poster_id?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agreements_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agreements_bounty_id_fkey"
+            columns: ["bounty_id"]
+            isOneToOne: false
+            referencedRelation: "bounties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      applications: {
+        Row: {
+          applicant_id: string
+          bounty_id: string
+          created_at: string
+          estimated_cost: number
+          estimated_hours: number
+          id: string
+          needs_from_requestor: string
+          problem_understanding: string
+          scope_approach: string
+          solution_plan: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          applicant_id: string
+          bounty_id: string
+          created_at?: string
+          estimated_cost: number
+          estimated_hours: number
+          id?: string
+          needs_from_requestor: string
+          problem_understanding: string
+          scope_approach: string
+          solution_plan: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          applicant_id?: string
+          bounty_id?: string
+          created_at?: string
+          estimated_cost?: number
+          estimated_hours?: number
+          id?: string
+          needs_from_requestor?: string
+          problem_understanding?: string
+          scope_approach?: string
+          solution_plan?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "applications_bounty_id_fkey"
+            columns: ["bounty_id"]
+            isOneToOne: false
+            referencedRelation: "bounties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bounties: {
         Row: {
           acceptance_criteria: string | null
@@ -97,6 +216,60 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      scheduled_calls: {
+        Row: {
+          applicant_id: string
+          application_id: string
+          bounty_id: string
+          created_at: string
+          duration_minutes: number
+          id: string
+          notes: string | null
+          poster_id: string
+          scheduled_at: string
+          status: string
+        }
+        Insert: {
+          applicant_id: string
+          application_id: string
+          bounty_id: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          poster_id: string
+          scheduled_at: string
+          status?: string
+        }
+        Update: {
+          applicant_id?: string
+          application_id?: string
+          bounty_id?: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          poster_id?: string
+          scheduled_at?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scheduled_calls_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scheduled_calls_bounty_id_fkey"
+            columns: ["bounty_id"]
+            isOneToOne: false
+            referencedRelation: "bounties"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import Navbar from "@/components/Navbar";
 import { DoodleStar, DoodleSquiggle } from "@/components/DoodleElements";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +26,8 @@ import {
   Wrench,
   MessageSquare,
   Timer,
+  Send,
+  Users,
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -107,9 +110,11 @@ const DetailRow = ({
 
 const BountyDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
   const [bounty, setBounty] = useState<Bounty | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [appCount, setAppCount] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -128,7 +133,16 @@ const BountyDetail = () => {
       setLoading(false);
     };
     fetchBounty();
-  }, [id]);
+
+    // Fetch application count if owner
+    if (user) {
+      supabase
+        .from("applications")
+        .select("id", { count: "exact", head: true })
+        .eq("bounty_id", id)
+        .then(({ count }) => setAppCount(count || 0));
+    }
+  }, [id, user]);
 
   if (loading) {
     return (
@@ -202,6 +216,23 @@ const BountyDetail = () => {
           <div className="flex items-center gap-2">
             <DollarSign className="w-5 h-5 text-accent" />
             <span className="text-2xl font-bold text-accent">{formatCurrency(bounty.bounty_amount)}</span>
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex flex-wrap gap-3 mt-4">
+            {user && bounty.user_id === user.id ? (
+              <Link to={`/bounties/${bounty.id}/applications`}>
+                <Button className="gap-2">
+                  <Users className="w-4 h-4" /> View Applications {appCount > 0 && `(${appCount})`}
+                </Button>
+              </Link>
+            ) : (
+              <Link to={`/bounties/${bounty.id}/apply`}>
+                <Button className="gap-2 glow-primary">
+                  <Send className="w-4 h-4" /> Apply to this Bounty
+                </Button>
+              </Link>
+            )}
           </div>
         </motion.div>
 
