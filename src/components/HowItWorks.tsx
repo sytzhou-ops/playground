@@ -44,6 +44,9 @@ const HowItWorks = () => {
             Simple as{" "}
             <span className="text-gradient-primary">1, 2, 3</span>
           </h2>
+          <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto mt-4 leading-relaxed">
+            Post your challenge with a bounty. AI builders compete to solve it. You only pay for results.
+          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-6 relative">
