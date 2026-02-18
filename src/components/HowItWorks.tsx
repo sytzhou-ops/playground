@@ -45,7 +45,7 @@ const HowItWorks = () => {
             <span className="text-gradient-primary">1, 2, 3</span>
           </h2>
           <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto mt-4 leading-relaxed">
-            Post your challenge with a bounty. AI builders compete to solve it. You only pay for results.
+            Post the problem. Set the bounty. Get it solved. Pay only for results.
           </p>
         </motion.div>
 
