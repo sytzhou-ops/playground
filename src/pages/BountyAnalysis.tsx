@@ -183,6 +183,7 @@ const BountyAnalysis = () => {
         hours_wasted: bountyData.hoursWasted,
         annual_cost: bountyData.annualCost,
         pain_description: bountyData.painDescription || null,
+        impact_description: bountyData.impactDescription || null,
         desired_outcome: bountyData.desiredOutcome || null,
         acceptance_criteria: bountyData.acceptanceCriteria || null,
         tool_preferences: bountyData.toolPreferences || null,

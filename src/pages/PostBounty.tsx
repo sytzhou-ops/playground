@@ -32,6 +32,7 @@ interface BountyFormData {
   hoursWasted: number;
   annualCost: number;
   painDescription: string;
+  impactDescription: string;
   // Request
   desiredOutcome: string;
   acceptanceCriteria: string;
@@ -54,6 +55,7 @@ const initialFormData: BountyFormData = {
   hoursWasted: 0,
   annualCost: 0,
   painDescription: "",
+  impactDescription: "",
   desiredOutcome: "",
   acceptanceCriteria: "",
   toolPreferences: "",
@@ -367,6 +369,16 @@ const StepPain = ({ formData, update }: StepProps) => (
         onChange={(e) => update("painDescription", e.target.value)}
         rows={2}
         maxLength={1000}
+      />
+    </div>
+    <div className={fieldClass}>
+      <Label htmlFor="impactDescription" className="text-foreground">Expected impact of solving this</Label>
+      <Input
+        id="impactDescription"
+        placeholder="e.g. Eliminates manual data entry, 3x content output, Frees 2 FTEs"
+        value={formData.impactDescription}
+        onChange={(e) => update("impactDescription", e.target.value)}
+        maxLength={200}
       />
     </div>
   </div>
