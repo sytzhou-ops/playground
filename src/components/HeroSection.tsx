@@ -46,11 +46,19 @@ const HeroSection = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="text-base md:text-lg text-muted-foreground/90 max-w-2xl mx-auto mb-4 leading-relaxed font-medium"
         >
-          Post your automation challenge with a bounty. 
-          AI builders compete to solve it. You only pay for results.
+          The first marketplace where real operational problems meet outcome-driven AI solutions.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.45 }}
+          className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed"
+        >
+          Post your challenge with a bounty. AI builders compete to solve it. You only pay for results.
         </motion.p>
 
         <motion.div

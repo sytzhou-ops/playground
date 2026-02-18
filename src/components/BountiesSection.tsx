@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AISparkle } from "./DoodleElements";
-import { Flame, ArrowRight } from "lucide-react";
+import { Flame, ArrowRight, Shield, BadgeCheck, Clock, DollarSign, Cpu, Database, Plug } from "lucide-react";
 
 interface BountyCardProps {
   title: string;
@@ -12,6 +12,15 @@ interface BountyCardProps {
   proposals: number;
   daysLeft: number;
   hot?: boolean;
+  verified?: boolean;
+  escrow?: boolean;
+  successRate?: number;
+  annualSavings?: string;
+  hoursPerWeek?: number;
+  impact?: string;
+  complexity?: "Low" | "Medium" | "High";
+  dataReady?: boolean;
+  integrations?: number;
 }
 
 const bounties: BountyCardProps[] = [
@@ -24,6 +33,15 @@ const bounties: BountyCardProps[] = [
     proposals: 12,
     daysLeft: 5,
     hot: true,
+    verified: true,
+    escrow: true,
+    successRate: 94,
+    annualSavings: "$48K",
+    hoursPerWeek: 15,
+    impact: "Eliminates manual data entry",
+    complexity: "Medium",
+    dataReady: true,
+    integrations: 2,
   },
   {
     title: "AI agent to categorize and respond to 80% of inbound support emails",
@@ -33,6 +51,15 @@ const bounties: BountyCardProps[] = [
     category: "Customer Support",
     proposals: 8,
     daysLeft: 12,
+    verified: true,
+    escrow: true,
+    successRate: 91,
+    annualSavings: "$32K",
+    hoursPerWeek: 10,
+    impact: "Cuts response time by 80%",
+    complexity: "Medium",
+    dataReady: true,
+    integrations: 1,
   },
   {
     title: "Build an interactive AI-powered wedding website with RSVP management",
@@ -42,6 +69,13 @@ const bounties: BountyCardProps[] = [
     category: "Web",
     proposals: 15,
     daysLeft: 20,
+    escrow: true,
+    annualSavings: "$2K",
+    hoursPerWeek: 3,
+    impact: "Automates guest management",
+    complexity: "Low",
+    dataReady: false,
+    integrations: 1,
   },
   {
     title: "Auto-generate social media posts from blog content with brand voice",
@@ -52,6 +86,15 @@ const bounties: BountyCardProps[] = [
     proposals: 6,
     daysLeft: 8,
     hot: true,
+    verified: true,
+    escrow: true,
+    successRate: 88,
+    annualSavings: "$24K",
+    hoursPerWeek: 8,
+    impact: "3x content output",
+    complexity: "Low",
+    dataReady: true,
+    integrations: 3,
   },
   {
     title: "Schedule optimization AI for 30+ field technicians across 3 cities",
@@ -61,6 +104,15 @@ const bounties: BountyCardProps[] = [
     category: "Logistics",
     proposals: 4,
     daysLeft: 14,
+    verified: true,
+    escrow: true,
+    successRate: 96,
+    annualSavings: "$120K",
+    hoursPerWeek: 25,
+    impact: "20% fewer idle hours",
+    complexity: "High",
+    dataReady: true,
+    integrations: 4,
   },
   {
     title: "AI chatbot for patient intake and appointment pre-screening",
@@ -70,10 +122,29 @@ const bounties: BountyCardProps[] = [
     category: "Healthcare",
     proposals: 9,
     daysLeft: 7,
+    verified: true,
+    escrow: true,
+    successRate: 92,
+    annualSavings: "$56K",
+    hoursPerWeek: 12,
+    impact: "Frees 2 FTEs from admin",
+    complexity: "Medium",
+    dataReady: false,
+    integrations: 2,
   },
 ];
 
-const BountyCard = ({ title, bounty, author, role, category, proposals, daysLeft, hot }: BountyCardProps) => (
+const complexityColor = {
+  Low: "text-green-400",
+  Medium: "text-yellow-400",
+  High: "text-red-400",
+};
+
+const BountyCard = ({
+  title, bounty, author, role, category, proposals, daysLeft, hot,
+  verified, escrow, successRate, annualSavings, hoursPerWeek, impact,
+  complexity, dataReady, integrations,
+}: BountyCardProps) => (
   <div className="group relative glass rounded-2xl p-6 w-[340px] shrink-0 mt-4 hover:border-primary/30 transition-all duration-300">
     {hot && (
       <div className="absolute -top-3 right-4 flex items-center gap-1.5 bg-gradient-to-r from-bounty to-bounty/80 text-bounty-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty z-10">
@@ -81,25 +152,83 @@ const BountyCard = ({ title, bounty, author, role, category, proposals, daysLeft
       </div>
     )}
 
-    <div className="flex items-start justify-between mb-4">
+    {/* Trust badges */}
+    <div className="flex items-center gap-2 mb-3">
+      {escrow && (
+        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full border border-green-400/20">
+          <Shield className="w-2.5 h-2.5" /> Escrow
+        </span>
+      )}
+      {verified && (
+        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
+          <BadgeCheck className="w-2.5 h-2.5" /> Verified
+        </span>
+      )}
+      {successRate && (
+        <span className="text-[10px] font-mono text-muted-foreground ml-auto">
+          {successRate}% success
+        </span>
+      )}
+    </div>
+
+    <div className="flex items-start justify-between mb-3">
       <span className="text-xs font-medium text-primary/80 bg-primary/10 px-3 py-1 rounded-full border border-primary/10">
         {category}
       </span>
       <span className="text-xs text-muted-foreground font-mono">{daysLeft}d left</span>
     </div>
 
-    <h3 className="text-foreground font-semibold mb-5 leading-snug group-hover:text-primary/90 transition-colors">
+    <h3 className="text-foreground font-semibold mb-4 leading-snug group-hover:text-primary/90 transition-colors text-sm">
       {title}
     </h3>
 
+    {/* ROI metrics */}
+    <div className="grid grid-cols-3 gap-2 mb-4 p-2.5 rounded-xl bg-muted/30 border border-border/30">
+      <div className="text-center">
+        <div className="flex items-center justify-center gap-1 text-primary">
+          <DollarSign className="w-3 h-3" />
+          <span className="text-xs font-bold">{annualSavings || "—"}</span>
+        </div>
+        <p className="text-[9px] text-muted-foreground mt-0.5">saved/yr</p>
+      </div>
+      <div className="text-center border-x border-border/30">
+        <div className="flex items-center justify-center gap-1 text-accent">
+          <Clock className="w-3 h-3" />
+          <span className="text-xs font-bold">{hoursPerWeek || "—"}h</span>
+        </div>
+        <p className="text-[9px] text-muted-foreground mt-0.5">saved/wk</p>
+      </div>
+      <div className="text-center">
+        <p className="text-[10px] font-medium text-foreground/80 leading-tight">{impact || "—"}</p>
+      </div>
+    </div>
+
+    {/* Builder signals */}
+    <div className="flex items-center gap-3 mb-4 text-[10px] text-muted-foreground">
+      <span className={`inline-flex items-center gap-1 ${complexity ? complexityColor[complexity] : ""}`}>
+        <Cpu className="w-3 h-3" />
+        {complexity || "—"}
+      </span>
+      <span className={`inline-flex items-center gap-1 ${dataReady ? "text-green-400" : "text-yellow-400"}`}>
+        <Database className="w-3 h-3" />
+        {dataReady ? "Data ready" : "Needs data"}
+      </span>
+      {integrations !== undefined && (
+        <span className="inline-flex items-center gap-1">
+          <Plug className="w-3 h-3" />
+          {integrations} integr.
+        </span>
+      )}
+    </div>
+
     <div className="flex items-baseline gap-2">
-      <span className="text-3xl font-extrabold text-gradient-primary">{bounty}</span>
+      <span className="text-2xl font-extrabold text-gradient-primary">{bounty}</span>
       <span className="text-xs text-muted-foreground">bounty</span>
     </div>
 
-    <div className="mt-5 pt-4 border-t border-border/50 flex items-center justify-between">
+    <div className="mt-4 pt-3 border-t border-border/50 flex items-center justify-between">
       <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center text-xs font-bold text-primary">
+        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center text-xs font-bold text-primary">
           {author[0]}
         </div>
         <div>
