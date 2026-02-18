@@ -149,6 +149,7 @@ export type Database = {
           desired_outcome: string | null
           hours_wasted: number | null
           id: string
+          impact_description: string | null
           industry: string | null
           pain_description: string | null
           pain_frequency: string | null
@@ -176,6 +177,7 @@ export type Database = {
           desired_outcome?: string | null
           hours_wasted?: number | null
           id?: string
+          impact_description?: string | null
           industry?: string | null
           pain_description?: string | null
           pain_frequency?: string | null
@@ -203,6 +205,7 @@ export type Database = {
           desired_outcome?: string | null
           hours_wasted?: number | null
           id?: string
+          impact_description?: string | null
           industry?: string | null
           pain_description?: string | null
           pain_frequency?: string | null

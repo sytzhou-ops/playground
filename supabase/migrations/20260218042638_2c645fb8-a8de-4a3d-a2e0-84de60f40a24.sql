@@ -1,0 +1,1 @@
+ALTER TABLE public.bounties ADD COLUMN impact_description text DEFAULT NULL;

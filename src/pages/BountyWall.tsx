@@ -28,7 +28,6 @@ import {
   DollarSign,
   Cpu,
   Database,
-  Plug,
 } from "lucide-react";
 
 interface Bounty {
@@ -45,6 +44,7 @@ interface Bounty {
   ai_scopability_score: number | null;
   hours_wasted: number | null;
   annual_cost: number | null;
+  impact_description: string | null;
   created_at: string;
 }
 
@@ -116,7 +116,7 @@ const BountyWall = () => {
   const fetchBounties = async () => {
     const { data, error } = await supabase
       .from("bounties")
-      .select("id, title, industry, problem_description, bounty_amount, urgency, payment_structure, ai_summary, ai_completeness_score, ai_clarity_score, ai_scopability_score, hours_wasted, annual_cost, created_at")
+      .select("id, title, industry, problem_description, bounty_amount, urgency, payment_structure, ai_summary, ai_completeness_score, ai_clarity_score, ai_scopability_score, hours_wasted, annual_cost, impact_description, created_at")
       .eq("status", "open")
       .order("created_at", { ascending: false });
 
@@ -406,7 +406,7 @@ const BountyWall = () => {
                         </p>
 
                         {/* ROI metrics */}
-                        {(bounty.annual_cost || bounty.hours_wasted) && (
+                        {(bounty.annual_cost || bounty.hours_wasted || bounty.impact_description) && (
                           <div className="flex items-center gap-4 p-2.5 rounded-lg bg-muted/30 border border-border/30 text-xs">
                             {bounty.annual_cost && bounty.annual_cost > 0 && (
                               <div className="flex items-center gap-1 text-primary">
@@ -421,6 +421,9 @@ const BountyWall = () => {
                                 <span className="font-bold">{bounty.hours_wasted}h</span>
                                 <span className="text-muted-foreground">/wk wasted</span>
                               </div>
+                            )}
+                            {bounty.impact_description && (
+                              <p className="text-[10px] font-medium text-foreground/80 leading-tight">{bounty.impact_description}</p>
                             )}
                           </div>
                         )}
