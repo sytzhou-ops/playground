@@ -157,7 +157,7 @@ const Auth = () => {
           <a href="/" className="inline-flex items-center gap-2.5">
             <AISparkle className="w-5 h-5 text-primary" />
             <span className="text-2xl font-display font-bold text-foreground">
-              bounty<span className="text-gradient-primary">AI</span>
+              Quest
             </span>
           </a>
           <p className="text-muted-foreground mt-3 text-sm">
