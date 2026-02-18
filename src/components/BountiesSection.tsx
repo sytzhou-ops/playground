@@ -164,11 +164,6 @@ const BountyCard = ({
           <BadgeCheck className="w-2.5 h-2.5" /> Verified
         </span>
       )}
-      {successRate && (
-        <span className="text-[10px] font-mono text-muted-foreground ml-auto">
-          {successRate}% success
-        </span>
-      )}
     </div>
 
     <div className="flex items-start justify-between mb-3">
