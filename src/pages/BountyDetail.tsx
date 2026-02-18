@@ -28,6 +28,8 @@ import {
   Timer,
   Send,
   Users,
+  Shield,
+  BadgeCheck,
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -217,6 +219,56 @@ const BountyDetail = () => {
             <DollarSign className="w-5 h-5 text-accent" />
             <span className="text-2xl font-bold text-accent">{formatCurrency(bounty.bounty_amount)}</span>
           </div>
+
+          {/* Trust badges */}
+          <div className="flex items-center gap-2 mt-3 flex-wrap">
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-green-400 bg-green-400/10 px-2.5 py-1 rounded-full border border-green-400/20">
+              <Shield className="w-3 h-3" /> Escrow Protected
+            </span>
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-accent bg-accent/10 px-2.5 py-1 rounded-full border border-accent/20">
+              <BadgeCheck className="w-3 h-3" /> Verified Buyer
+            </span>
+          </div>
+
+          {/* ROI & Builder signals */}
+          {(bounty.annual_cost || bounty.hours_wasted) && (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 p-3 rounded-xl bg-muted/30 border border-border/30">
+              {bounty.annual_cost !== null && bounty.annual_cost > 0 && (
+                <div className="text-center">
+                  <div className="flex items-center justify-center gap-1 text-primary">
+                    <DollarSign className="w-3 h-3" />
+                    <span className="text-xs font-bold">{formatCurrency(bounty.annual_cost)}</span>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">saved/yr</p>
+                </div>
+              )}
+              {bounty.hours_wasted !== null && bounty.hours_wasted > 0 && (
+                <div className="text-center">
+                  <div className="flex items-center justify-center gap-1 text-accent">
+                    <Clock className="w-3 h-3" />
+                    <span className="text-xs font-bold">{bounty.hours_wasted}h</span>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">saved/wk</p>
+                </div>
+              )}
+              {bounty.ai_scopability_score !== null && (
+                <div className="text-center">
+                  <span className={`text-xs font-bold ${bounty.ai_scopability_score >= 70 ? "text-green-400" : "text-yellow-400"}`}>
+                    {bounty.ai_scopability_score >= 70 ? "Well scoped" : "Needs scoping"}
+                  </span>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Scope quality</p>
+                </div>
+              )}
+              {bounty.ai_completeness_score !== null && (
+                <div className="text-center">
+                  <span className={`text-xs font-bold ${bounty.ai_completeness_score >= 60 ? "text-green-400" : "text-yellow-400"}`}>
+                    {bounty.ai_completeness_score >= 60 ? "Data ready" : "Needs data"}
+                  </span>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Readiness</p>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Action buttons */}
           <div className="flex flex-wrap gap-3 mt-4">
