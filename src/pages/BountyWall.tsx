@@ -23,6 +23,12 @@ import {
   Search,
   SlidersHorizontal,
   X,
+  Shield,
+  BadgeCheck,
+  DollarSign,
+  Cpu,
+  Database,
+  Plug,
 } from "lucide-react";
 
 interface Bounty {
@@ -37,6 +43,8 @@ interface Bounty {
   ai_completeness_score: number | null;
   ai_clarity_score: number | null;
   ai_scopability_score: number | null;
+  hours_wasted: number | null;
+  annual_cost: number | null;
   created_at: string;
 }
 
@@ -108,7 +116,7 @@ const BountyWall = () => {
   const fetchBounties = async () => {
     const { data, error } = await supabase
       .from("bounties")
-      .select("id, title, industry, problem_description, bounty_amount, urgency, payment_structure, ai_summary, ai_completeness_score, ai_clarity_score, ai_scopability_score, created_at")
+      .select("id, title, industry, problem_description, bounty_amount, urgency, payment_structure, ai_summary, ai_completeness_score, ai_clarity_score, ai_scopability_score, hours_wasted, annual_cost, created_at")
       .eq("status", "open")
       .order("created_at", { ascending: false });
 
@@ -358,6 +366,16 @@ const BountyWall = () => {
                     <Link to={`/bounties/${bounty.id}`} className="block h-full">
                     <Card className="h-full hover:border-primary/30 transition-colors cursor-pointer">
                       <CardHeader className="pb-3">
+                        {/* Trust badges */}
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full border border-green-400/20">
+                            <Shield className="w-2.5 h-2.5" /> Escrow
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
+                            <BadgeCheck className="w-2.5 h-2.5" /> Verified
+                          </span>
+                        </div>
+
                         <div className="flex items-start justify-between gap-3">
                           <CardTitle className="text-lg leading-snug line-clamp-2">{bounty.title}</CardTitle>
                           <span className="text-xl font-bold text-accent whitespace-nowrap">
@@ -382,10 +400,50 @@ const BountyWall = () => {
                           )}
                         </div>
                       </CardHeader>
-                      <CardContent className="pb-3">
-                        <p className="text-sm text-muted-foreground line-clamp-3">
+                      <CardContent className="pb-3 space-y-3">
+                        <p className="text-sm text-muted-foreground line-clamp-2">
                           {bounty.ai_summary || bounty.problem_description}
                         </p>
+
+                        {/* ROI metrics */}
+                        {(bounty.annual_cost || bounty.hours_wasted) && (
+                          <div className="flex items-center gap-4 p-2.5 rounded-lg bg-muted/30 border border-border/30 text-xs">
+                            {bounty.annual_cost && bounty.annual_cost > 0 && (
+                              <div className="flex items-center gap-1 text-primary">
+                                <DollarSign className="w-3 h-3" />
+                                <span className="font-bold">{formatCurrency(bounty.annual_cost)}</span>
+                                <span className="text-muted-foreground">/yr cost</span>
+                              </div>
+                            )}
+                            {bounty.hours_wasted && bounty.hours_wasted > 0 && (
+                              <div className="flex items-center gap-1 text-accent">
+                                <Clock className="w-3 h-3" />
+                                <span className="font-bold">{bounty.hours_wasted}h</span>
+                                <span className="text-muted-foreground">/wk wasted</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Builder signals */}
+                        <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
+                          {bounty.ai_scopability_score !== null && (
+                            <span className={`inline-flex items-center gap-1 ${
+                              bounty.ai_scopability_score >= 70 ? "text-green-400" : bounty.ai_scopability_score >= 40 ? "text-yellow-400" : "text-red-400"
+                            }`}>
+                              <Cpu className="w-3 h-3" />
+                              {bounty.ai_scopability_score >= 70 ? "Well scoped" : bounty.ai_scopability_score >= 40 ? "Partially scoped" : "Needs scoping"}
+                            </span>
+                          )}
+                          {bounty.ai_completeness_score !== null && (
+                            <span className={`inline-flex items-center gap-1 ${
+                              bounty.ai_completeness_score >= 60 ? "text-green-400" : "text-yellow-400"
+                            }`}>
+                              <Database className="w-3 h-3" />
+                              {bounty.ai_completeness_score >= 60 ? "Data ready" : "Needs detail"}
+                            </span>
+                          )}
+                        </div>
                       </CardContent>
                       <CardFooter className="flex items-center justify-between pt-0">
                         <div className="flex items-center gap-3">
