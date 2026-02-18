@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
@@ -12,9 +13,23 @@ import { toast } from "@/hooks/use-toast";
 import { Mail, Phone, Chrome, Apple, Sparkles, ArrowRight } from "lucide-react";
 
 const Auth = () => {
+  const { session } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const returnTo = (location.state as any)?.returnTo || "/";
+
+  // Redirect if already authenticated (e.g. after OAuth sets session)
+  useEffect(() => {
+    if (session) {
+      const savedReturn = localStorage.getItem("auth_return_to");
+      if (savedReturn) {
+        localStorage.removeItem("auth_return_to");
+        navigate(savedReturn, { replace: true });
+      } else {
+        navigate(returnTo, { replace: true });
+      }
+    }
+  }, [session, navigate, returnTo]);
   const [loading, setLoading] = useState(false);
   const [authMethod, setAuthMethod] = useState<"email" | "phone">("email");
   const [email, setEmail] = useState("");
