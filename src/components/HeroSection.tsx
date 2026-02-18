@@ -47,7 +47,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-base md:text-lg text-muted-foreground/90 max-w-2xl mx-auto mb-4 leading-relaxed font-medium"
+          className="text-lg md:text-2xl text-foreground max-w-2xl mx-auto mb-4 leading-relaxed font-semibold"
         >
           The first marketplace where real operational problems meet outcome-driven AI solutions.
         </motion.p>
