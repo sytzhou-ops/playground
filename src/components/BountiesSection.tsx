@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AISparkle } from "./DoodleElements";
-import { Flame, ArrowRight, Shield, BadgeCheck, Clock, DollarSign, Cpu, Database, Plug } from "lucide-react";
+import { Flame, ArrowRight, Shield, BadgeCheck, Clock, DollarSign, Cpu, Database } from "lucide-react";
 
 interface BountyCardProps {
   title: string;
@@ -14,13 +14,12 @@ interface BountyCardProps {
   hot?: boolean;
   verified?: boolean;
   escrow?: boolean;
-  successRate?: number;
+  
   annualSavings?: string;
   hoursPerWeek?: number;
   impact?: string;
   complexity?: "Low" | "Medium" | "High";
   dataReady?: boolean;
-  integrations?: number;
 }
 
 const bounties: BountyCardProps[] = [
@@ -35,13 +34,12 @@ const bounties: BountyCardProps[] = [
     hot: true,
     verified: true,
     escrow: true,
-    successRate: 94,
+    
     annualSavings: "$48K",
     hoursPerWeek: 15,
     impact: "Eliminates manual data entry",
     complexity: "Medium",
     dataReady: true,
-    integrations: 2,
   },
   {
     title: "AI agent to categorize and respond to 80% of inbound support emails",
@@ -53,13 +51,12 @@ const bounties: BountyCardProps[] = [
     daysLeft: 12,
     verified: true,
     escrow: true,
-    successRate: 91,
+    
     annualSavings: "$32K",
     hoursPerWeek: 10,
     impact: "Cuts response time by 80%",
     complexity: "Medium",
     dataReady: true,
-    integrations: 1,
   },
   {
     title: "Build an interactive AI-powered wedding website with RSVP management",
@@ -75,7 +72,6 @@ const bounties: BountyCardProps[] = [
     impact: "Automates guest management",
     complexity: "Low",
     dataReady: false,
-    integrations: 1,
   },
   {
     title: "Auto-generate social media posts from blog content with brand voice",
@@ -88,13 +84,12 @@ const bounties: BountyCardProps[] = [
     hot: true,
     verified: true,
     escrow: true,
-    successRate: 88,
+    
     annualSavings: "$24K",
     hoursPerWeek: 8,
     impact: "3x content output",
     complexity: "Low",
     dataReady: true,
-    integrations: 3,
   },
   {
     title: "Schedule optimization AI for 30+ field technicians across 3 cities",
@@ -106,13 +101,12 @@ const bounties: BountyCardProps[] = [
     daysLeft: 14,
     verified: true,
     escrow: true,
-    successRate: 96,
+    
     annualSavings: "$120K",
     hoursPerWeek: 25,
     impact: "20% fewer idle hours",
     complexity: "High",
     dataReady: true,
-    integrations: 4,
   },
   {
     title: "AI chatbot for patient intake and appointment pre-screening",
@@ -124,13 +118,12 @@ const bounties: BountyCardProps[] = [
     daysLeft: 7,
     verified: true,
     escrow: true,
-    successRate: 92,
+    
     annualSavings: "$56K",
     hoursPerWeek: 12,
     impact: "Frees 2 FTEs from admin",
     complexity: "Medium",
     dataReady: false,
-    integrations: 2,
   },
 ];
 
@@ -142,8 +135,8 @@ const complexityColor = {
 
 const BountyCard = ({
   title, bounty, author, role, category, proposals, daysLeft, hot,
-  verified, escrow, successRate, annualSavings, hoursPerWeek, impact,
-  complexity, dataReady, integrations,
+  verified, escrow, annualSavings, hoursPerWeek, impact,
+  complexity, dataReady,
 }: BountyCardProps) => (
   <div className="group relative glass rounded-2xl p-6 w-[340px] shrink-0 mt-4 hover:border-primary/30 transition-all duration-300">
     {hot && (
@@ -208,12 +201,6 @@ const BountyCard = ({
         <Database className="w-3 h-3" />
         {dataReady ? "Data ready" : "Needs data"}
       </span>
-      {integrations !== undefined && (
-        <span className="inline-flex items-center gap-1">
-          <Plug className="w-3 h-3" />
-          {integrations} integr.
-        </span>
-      )}
     </div>
 
     <div className="flex items-baseline gap-2">
