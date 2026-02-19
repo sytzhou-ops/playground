@@ -49,23 +49,23 @@ const HowItWorks = () => {
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto relative">
-          {/* Vertical connecting line */}
-          <div className="hidden md:block absolute top-12 bottom-12 left-7 w-px bg-gradient-to-b from-primary/20 via-accent/20 to-primary/20" />
+        <div className="grid md:grid-cols-3 gap-6 relative">
+          {/* Connecting line */}
+          <div className="hidden md:block absolute top-24 left-[20%] right-[20%] h-px bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20" />
 
           {steps.map((step, i) => {
             const Icon = step.icon;
             return (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
                 className="group relative"
-                style={{ marginLeft: `${i * 6}rem` }}
               >
                 <div className={`relative glass rounded-3xl p-8 hover:border-primary/30 transition-all duration-300 overflow-hidden`}>
+                  {/* Background gradient */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                   
                   <div className="relative z-10">

@@ -65,7 +65,7 @@ const Navbar = () => {
                   className="hidden sm:flex items-center gap-1.5 text-sm text-accent hover:text-accent/80 transition-colors px-3 py-2"
                 >
                   <Shield className="w-3.5 h-3.5" />
-                  {hunterStatus === "pending" ? "Hunter Status" : "Become a Bounty Hunter"}
+                  {hunterStatus === "pending" ? "Hunter Status" : "Become a Hunter"}
                 </Link>
               )}
 
