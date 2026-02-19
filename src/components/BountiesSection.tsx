@@ -252,12 +252,12 @@ const BountiesSection = () => {
 
       {/* Marquee */}
       <div className="relative overflow-hidden pt-2 space-y-6">
-        <div className="flex gap-6 animate-[marquee_31.5s_linear_infinite] hover:[animation-play-state:paused]">
+        <div className="flex gap-6 animate-[marquee_25s_linear_infinite] hover:[animation-play-state:paused]">
           {doubled.map((b, i) => (
             <BountyCard key={`row1-${i}`} {...b} />
           ))}
         </div>
-        <div className="flex gap-6 animate-[marquee-reverse_31.5s_linear_infinite] hover:[animation-play-state:paused]">
+        <div className="flex gap-6 animate-[marquee-reverse_25s_linear_infinite] hover:[animation-play-state:paused]">
           {[...bounties.slice(3), ...bounties.slice(0, 3), ...bounties.slice(3), ...bounties.slice(0, 3)].map((b, i) => (
             <BountyCard key={`row2-${i}`} {...b} />
           ))}
