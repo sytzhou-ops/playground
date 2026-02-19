@@ -35,7 +35,7 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-2.5">
           <AISparkle className="w-5 h-5 text-primary" />
           <span className="text-lg font-display font-bold text-foreground">
-            Quest
+            BountyAI
           </span>
         </Link>
 
