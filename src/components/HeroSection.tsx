@@ -28,7 +28,7 @@ const HeroSection = () => {
         >
           <span className="inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase text-primary border border-primary/20 rounded-full px-5 py-2 glass mb-8">
             <Sparkles className="w-3.5 h-3.5" />
-            The AI BountyAI Marketplace
+            The AI-Powered Bounty Marketplace
           </span>
         </motion.div>
 

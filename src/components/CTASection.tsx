@@ -60,9 +60,9 @@ const CTASection = () => {
       {/* Footer */}
       <div className="container mx-auto px-6 mt-20">
         <div className="flex flex-col md:flex-row items-center justify-between py-8 border-t border-border text-sm text-muted-foreground">
-          <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <AISparkle className="w-4 h-4 text-primary" />
-            <span className="font-display font-bold text-foreground">BountyAI</span>
+           <div className="flex items-center gap-2 mb-4 md:mb-0">
+            <img src="/patch-logo.png" alt="Patch" className="w-5 h-5" />
+            <span className="font-display font-bold text-foreground">Patch</span>
           </div>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-foreground transition-colors">About</a>
@@ -70,7 +70,7 @@ const CTASection = () => {
             <a href="#" className="hover:text-foreground transition-colors">Contact</a>
             <a href="#" className="hover:text-foreground transition-colors">Terms</a>
           </div>
-          <p className="mt-4 md:mt-0 font-mono text-xs">© 2026 BountyAI</p>
+          <p className="mt-4 md:mt-0 font-mono text-xs">© 2026 Patch</p>
         </div>
       </div>
     </section>

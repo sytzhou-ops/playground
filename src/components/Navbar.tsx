@@ -33,9 +33,9 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-3.5">
         <Link to="/" className="flex items-center gap-2.5">
-          <AISparkle className="w-5 h-5 text-primary" />
+          <img src="/patch-logo.png" alt="Patch" className="w-6 h-6" />
           <span className="text-lg font-display font-bold text-foreground">
-            BountyAI
+            Patch
           </span>
         </Link>
 
