@@ -170,9 +170,9 @@ const Auth = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <a href="/" className="inline-flex items-center gap-2.5">
-            <AISparkle className="w-5 h-5 text-primary" />
+            <img src="/patch-logo.png" alt="Patch" className="w-6 h-6" />
             <span className="text-2xl font-display font-bold text-foreground">
-              BountyAI
+              Patch
             </span>
           </a>
           <p className="text-muted-foreground mt-3 text-sm">
