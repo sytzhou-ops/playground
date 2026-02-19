@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
-import "@/integrations/lovable"; // Initialize OAuth callback handler early
 import OAuthCallback from "./components/OAuthCallback";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";

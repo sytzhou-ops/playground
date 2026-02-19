@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { Orb, AISparkle, GridBackground } from "@/components/DoodleElements";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -99,8 +98,11 @@ const Auth = () => {
     setLoading(true);
     try {
       localStorage.setItem("auth_return_to", returnTo);
-      const { error } = await lovable.auth.signInWithOAuth(provider, {
-        redirect_uri: window.location.origin,
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: window.location.origin,
+        },
       });
       if (error) throw error;
     } catch (err: any) {
