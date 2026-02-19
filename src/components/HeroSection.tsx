@@ -57,28 +57,28 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.55 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <Link
             to="/post-bounty"
-            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold px-8 py-4 rounded-2xl text-lg glow-primary hover:shadow-[0_0_60px_-10px_hsl(270_95%_65%_/_0.6)] transition-all duration-300"
+            className="group inline-flex items-center gap-2.5 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold px-7 py-3.5 rounded-xl text-sm glow-primary hover:shadow-[0_0_50px_-10px_hsl(270_95%_65%_/_0.6)] transition-all duration-300"
           >
-            <Zap className="w-5 h-5" />
+            <Zap className="w-4 h-4" />
             Post a Bounty
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link
             to="/bounties"
-            className="inline-flex items-center gap-2 text-foreground/80 hover:text-foreground px-8 py-4 rounded-2xl glass hover:border-primary/30 transition-all duration-300"
+            className="inline-flex items-center gap-2 text-foreground/70 hover:text-foreground font-medium px-7 py-3.5 rounded-xl text-sm glass border border-border/40 hover:border-primary/30 transition-all duration-300"
           >
             Browse Bounties
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <Link
             to="/become-hunter"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground px-8 py-4 rounded-2xl border border-border hover:border-accent/30 transition-all duration-300"
+            className="inline-flex items-center gap-2 text-foreground/70 hover:text-foreground font-medium px-7 py-3.5 rounded-xl text-sm border border-border/40 hover:border-accent/30 transition-all duration-300"
           >
-            <Sparkles className="w-4 h-4 text-accent" />
+            <Sparkles className="w-3.5 h-3.5 text-accent" />
             Join as a Hunter
           </Link>
         </motion.div>
