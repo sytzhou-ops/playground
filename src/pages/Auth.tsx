@@ -171,9 +171,9 @@ const Auth = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <a href="/" className="inline-flex items-center gap-2.5">
-            <img src={patchLogo} alt="Patch" className="w-6 h-6" />
+            <img src={patchLogo} alt="Patch.ai" className="w-6 h-6" />
             <span className="text-2xl font-display font-bold text-foreground">
-              Patch
+              patch.ai
             </span>
           </a>
           <p className="text-muted-foreground mt-3 text-sm">
