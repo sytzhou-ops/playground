@@ -34,9 +34,9 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-3.5">
         <Link to="/" className="flex items-center gap-2.5">
-          <img src={patchLogo} alt="Patch" className="w-6 h-6" />
+          <img src={patchLogo} alt="Patch.ai" className="w-6 h-6" />
           <span className="text-lg font-display font-bold text-foreground">
-            Patch
+            patch.ai
           </span>
         </Link>
 
