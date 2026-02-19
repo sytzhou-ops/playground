@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Orb, AISparkle } from "./DoodleElements";
 import { Zap, ArrowRight, Sparkles } from "lucide-react";
+import patchLogo from "@/assets/patch-logo.png";
 
 const CTASection = () => {
   return (
@@ -61,7 +62,7 @@ const CTASection = () => {
       <div className="container mx-auto px-6 mt-20">
         <div className="flex flex-col md:flex-row items-center justify-between py-8 border-t border-border text-sm text-muted-foreground">
            <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <img src="/patch-logo.png" alt="Patch" className="w-5 h-5" />
+            <img src={patchLogo} alt="Patch" className="w-5 h-5" />
             <span className="font-display font-bold text-foreground">Patch</span>
           </div>
           <div className="flex items-center gap-6">
