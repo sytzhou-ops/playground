@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { Mail, Phone, Chrome, Apple, Sparkles, ArrowRight } from "lucide-react";
-import patchLogo from "@/assets/patch-logo.png";
+import PlaygroundLogo from "@/components/PlaygroundLogo";
 
 const Auth = () => {
   const { session } = useAuth();
@@ -173,9 +173,9 @@ const Auth = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <a href="/" className="inline-flex items-center gap-2.5">
-            <img src={patchLogo} alt="Patch.ai" className="w-6 h-6" />
+            <PlaygroundLogo className="w-7 h-7" />
             <span className="text-2xl font-display font-bold text-foreground">
-              patch.ai
+              playground.ai
             </span>
           </a>
           <p className="text-muted-foreground mt-3 text-sm">
