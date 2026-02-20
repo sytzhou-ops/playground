@@ -22,7 +22,7 @@ const Index = () => {
   }, [hash]);
 
   return (
-    <div className="min-h-screen bg-background bg-gradient-mesh noise-overlay">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
       <HowItWorks />
