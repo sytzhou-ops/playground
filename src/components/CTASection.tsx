@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Orb, AISparkle } from "./DoodleElements";
 import { Zap, ArrowRight, Sparkles } from "lucide-react";
-import patchLogo from "@/assets/patch-logo.png";
+import PlaygroundLogo from "./PlaygroundLogo";
 
 const CTASection = () => {
   return (
@@ -62,8 +62,8 @@ const CTASection = () => {
       <div className="container mx-auto px-6 mt-20">
         <div className="flex flex-col md:flex-row items-center justify-between py-8 border-t border-border text-sm text-muted-foreground">
            <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <img src={patchLogo} alt="patch.ai" className="w-5 h-5" />
-            <span className="font-display font-bold text-foreground">patch.ai</span>
+            <PlaygroundLogo className="w-5 h-5" />
+            <span className="font-display font-bold text-foreground">playground.ai</span>
           </div>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-foreground transition-colors">About</a>
@@ -71,7 +71,7 @@ const CTASection = () => {
             <a href="#" className="hover:text-foreground transition-colors">Contact</a>
             <a href="#" className="hover:text-foreground transition-colors">Terms</a>
           </div>
-          <p className="mt-4 md:mt-0 font-mono text-xs">© 2026 patch.ai</p>
+          <p className="mt-4 md:mt-0 font-mono text-xs">© 2026 playground.ai</p>
         </div>
       </div>
     </section>
