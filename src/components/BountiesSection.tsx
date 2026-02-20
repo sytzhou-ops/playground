@@ -1,233 +1,78 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { AISparkle } from "./DoodleElements";
-import { Flame, ArrowRight, Shield, BadgeCheck, Clock, DollarSign, Cpu, Database } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface BountyCardProps {
   title: string;
   bounty: string;
-  author: string;
-  role: string;
   category: string;
-  proposals: number;
+  author: string;
   daysLeft: number;
   hot?: boolean;
-  verified?: boolean;
-  escrow?: boolean;
-  
-  annualSavings?: string;
-  hoursPerWeek?: number;
-  impact?: string;
-  complexity?: "Low" | "Medium" | "High";
-  dataReady?: boolean;
 }
 
 const bounties: BountyCardProps[] = [
   {
     title: "Automate invoice extraction from vendor emails into QuickBooks",
     bounty: "$4,000",
-    author: "Marco T.",
-    role: "Restaurant Owner",
     category: "Finance",
-    proposals: 12,
+    author: "Marco T.",
     daysLeft: 5,
     hot: true,
-    verified: true,
-    escrow: true,
-    
-    annualSavings: "$48K",
-    hoursPerWeek: 15,
-    impact: "Eliminates manual data entry",
-    complexity: "Medium",
-    dataReady: true,
   },
   {
     title: "AI agent to categorize and respond to 80% of inbound support emails",
     bounty: "$2,000",
+    category: "Support",
     author: "Sarah K.",
-    role: "Gym Owner",
-    category: "Customer Support",
-    proposals: 8,
     daysLeft: 12,
-    verified: true,
-    escrow: true,
-    
-    annualSavings: "$32K",
-    hoursPerWeek: 10,
-    impact: "Cuts response time by 80%",
-    complexity: "Medium",
-    dataReady: true,
   },
   {
     title: "Build an interactive AI-powered wedding website with RSVP management",
     bounty: "$500",
-    author: "Jamie & Alex",
-    role: "Engaged Couple",
     category: "Web",
-    proposals: 15,
+    author: "Jamie & Alex",
     daysLeft: 20,
-    escrow: true,
-    annualSavings: "$2K",
-    hoursPerWeek: 3,
-    impact: "Automates guest management",
-    complexity: "Low",
-    dataReady: false,
   },
   {
     title: "Auto-generate social media posts from blog content with brand voice",
     bounty: "$1,500",
-    author: "Diana L.",
-    role: "Marketing Director",
     category: "Marketing",
-    proposals: 6,
+    author: "Diana L.",
     daysLeft: 8,
     hot: true,
-    verified: true,
-    escrow: true,
-    
-    annualSavings: "$24K",
-    hoursPerWeek: 8,
-    impact: "3x content output",
-    complexity: "Low",
-    dataReady: true,
   },
   {
     title: "Schedule optimization AI for 30+ field technicians across 3 cities",
     bounty: "$6,000",
-    author: "Robert M.",
-    role: "Operations Manager",
     category: "Logistics",
-    proposals: 4,
+    author: "Robert M.",
     daysLeft: 14,
-    verified: true,
-    escrow: true,
-    
-    annualSavings: "$120K",
-    hoursPerWeek: 25,
-    impact: "20% fewer idle hours",
-    complexity: "High",
-    dataReady: true,
   },
   {
     title: "AI chatbot for patient intake and appointment pre-screening",
     bounty: "$3,000",
-    author: "Dr. Patel",
-    role: "Clinic Owner",
     category: "Healthcare",
-    proposals: 9,
+    author: "Dr. Patel",
     daysLeft: 7,
-    verified: true,
-    escrow: true,
-    
-    annualSavings: "$56K",
-    hoursPerWeek: 12,
-    impact: "Frees 2 FTEs from admin",
-    complexity: "Medium",
-    dataReady: false,
   },
 ];
 
-const complexityColor = {
-  Low: "text-green-400",
-  Medium: "text-yellow-400",
-  High: "text-red-400",
-};
-
-const BountyCard = ({
-  title, bounty, author, role, category, proposals, daysLeft, hot,
-  verified, escrow, annualSavings, hoursPerWeek, impact,
-  complexity, dataReady,
-}: BountyCardProps) => (
-  <div className="group relative glass rounded-2xl p-6 w-[340px] shrink-0 mt-4 hover:border-primary/30 transition-all duration-300">
-    {hot && (
-      <div className="absolute -top-3 right-4 flex items-center gap-1.5 bg-gradient-to-r from-bounty to-bounty/80 text-bounty-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty z-10">
-        <Flame className="w-3 h-3" /> HOT
-      </div>
-    )}
-
-    {/* Trust badges */}
-    <div className="flex items-center gap-2 mb-3">
-      {escrow && (
-        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full border border-green-400/20">
-          <Shield className="w-2.5 h-2.5" /> Escrow
-        </span>
-      )}
-      {verified && (
-        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
-          <BadgeCheck className="w-2.5 h-2.5" /> Verified
-        </span>
-      )}
-    </div>
-
-    <div className="flex items-start justify-between mb-3">
-      <span className="text-xs font-medium text-primary/80 bg-primary/10 px-3 py-1 rounded-full border border-primary/10">
-        {category}
-      </span>
+const BountyCard = ({ title, bounty, category, author, daysLeft }: BountyCardProps) => (
+  <div className="rounded-xl border border-border p-5 hover:border-foreground/10 transition-colors">
+    <div className="flex items-center justify-between mb-3">
+      <span className="text-xs text-muted-foreground">{category}</span>
       <span className="text-xs text-muted-foreground font-mono">{daysLeft}d left</span>
     </div>
-
-    <h3 className="text-foreground font-semibold mb-4 leading-snug group-hover:text-primary/90 transition-colors text-sm">
-      {title}
-    </h3>
-
-    {/* ROI metrics */}
-    <div className="grid grid-cols-3 gap-2 mb-4 p-2.5 rounded-xl bg-muted/30 border border-border/30">
-      <div className="text-center">
-        <div className="flex items-center justify-center gap-1 text-primary">
-          <DollarSign className="w-3 h-3" />
-          <span className="text-xs font-bold">{annualSavings || "—"}</span>
-        </div>
-        <p className="text-[9px] text-muted-foreground mt-0.5">saved/yr</p>
-      </div>
-      <div className="text-center border-x border-border/30">
-        <div className="flex items-center justify-center gap-1 text-accent">
-          <Clock className="w-3 h-3" />
-          <span className="text-xs font-bold">{hoursPerWeek || "—"}h</span>
-        </div>
-        <p className="text-[9px] text-muted-foreground mt-0.5">saved/wk</p>
-      </div>
-      <div className="text-center">
-        <p className="text-[10px] font-medium text-foreground/80 leading-tight">{impact || "—"}</p>
-      </div>
-    </div>
-
-    {/* Builder signals */}
-    <div className="flex items-center gap-3 mb-4 text-[10px] text-muted-foreground">
-      <span className={`inline-flex items-center gap-1 ${complexity ? complexityColor[complexity] : ""}`}>
-        <Cpu className="w-3 h-3" />
-        {complexity || "—"}
-      </span>
-      <span className={`inline-flex items-center gap-1 ${dataReady ? "text-green-400" : "text-yellow-400"}`}>
-        <Database className="w-3 h-3" />
-        {dataReady ? "Data ready" : "Needs data"}
-      </span>
-    </div>
-
-    <div className="flex items-baseline gap-2">
-      <span className="text-2xl font-extrabold text-gradient-primary">{bounty}</span>
-      <span className="text-xs text-muted-foreground">bounty</span>
-    </div>
-
-    <div className="mt-4 pt-3 border-t border-border/50 flex items-center justify-between">
-      <div className="flex items-center gap-2.5">
-        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center text-xs font-bold text-primary">
-          {author[0]}
-        </div>
-        <div>
-          <p className="text-xs font-medium text-foreground">{author}</p>
-          <p className="text-[10px] text-muted-foreground">{role}</p>
-        </div>
-      </div>
-      <span className="text-xs text-muted-foreground font-mono">
-        {proposals} proposals
-      </span>
+    <h3 className="text-sm font-semibold text-foreground mb-4 leading-snug">{title}</h3>
+    <div className="flex items-center justify-between pt-3 border-t border-border">
+      <span className="text-lg font-bold text-foreground">{bounty}</span>
+      <span className="text-xs text-muted-foreground">{author}</span>
     </div>
   </div>
 );
 
 const BountiesSection = () => {
-  const doubled = [...bounties, ...bounties];
-
   return (
     <section id="bounties" className="py-32 relative">
       <div className="container mx-auto px-6">
@@ -235,47 +80,39 @@ const BountiesSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <span className="inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase text-accent mb-4">
-            <AISparkle className="w-3 h-3 text-accent" />
+          <h2 className="text-3xl md:text-5xl font-extrabold text-foreground">
             Live Bounties
-          </span>
-          <h2 className="text-4xl md:text-6xl font-extrabold text-foreground">
-            Bounty <span className="text-gradient-primary">Wall</span>
           </h2>
-          <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
+          <p className="text-muted-foreground mt-3 max-w-md mx-auto text-sm">
             Real problems. Real budgets. Pick your bounty.
           </p>
         </motion.div>
-      </div>
 
-      {/* Marquee */}
-      <div className="relative overflow-hidden pt-2 space-y-6">
-        <div className="flex gap-6 animate-[marquee_25s_linear_infinite] hover:[animation-play-state:paused]">
-          {doubled.map((b, i) => (
-            <BountyCard key={`row1-${i}`} {...b} />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          {bounties.map((b, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+            >
+              <BountyCard {...b} />
+            </motion.div>
           ))}
         </div>
-        <div className="flex gap-6 animate-[marquee-reverse_25s_linear_infinite] hover:[animation-play-state:paused]">
-          {[...bounties.slice(3), ...bounties.slice(0, 3), ...bounties.slice(3), ...bounties.slice(0, 3)].map((b, i) => (
-            <BountyCard key={`row2-${i}`} {...b} />
-          ))}
-        </div>
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
-      </div>
 
-      <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-14"
+          className="text-center mt-10"
         >
           <Link
             to="/bounties"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold px-8 py-3.5 rounded-2xl hover:shadow-[0_0_40px_-10px_hsl(270_95%_65%_/_0.5)] transition-all duration-300"
+            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             View all bounties
             <ArrowRight className="w-4 h-4" />
