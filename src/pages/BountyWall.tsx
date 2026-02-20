@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import { DoodleStar, DoodleSquiggle } from "@/components/DoodleElements";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -46,7 +45,171 @@ interface Bounty {
   annual_cost: number | null;
   impact_description: string | null;
   created_at: string;
+  // Extended fields for display
+  author?: string;
+  role?: string;
+  proposals?: number;
+  days_left?: number;
+  hot?: boolean;
+  verified?: boolean;
+  escrow?: boolean;
+  complexity?: "Low" | "Medium" | "High";
+  data_ready?: boolean;
 }
+
+const MOCK_BOUNTIES: Bounty[] = [
+  {
+    id: "mock-1",
+    title: "Automate invoice extraction from vendor emails into QuickBooks",
+    problem_description: "We spend 15+ hours a week manually copying invoice data from vendor emails into QuickBooks. Need an AI solution to automatically extract, categorize, and enter invoice data.",
+    bounty_amount: 4000,
+    industry: "finance",
+    urgency: "asap",
+    payment_structure: "fixed",
+    ai_summary: "Automate invoice extraction from vendor emails into QuickBooks to eliminate manual data entry.",
+    ai_completeness_score: 85,
+    ai_clarity_score: 90,
+    ai_scopability_score: 78,
+    hours_wasted: 15,
+    annual_cost: 48000,
+    impact_description: "Eliminates manual data entry",
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    author: "Marco T.",
+    role: "Restaurant Owner",
+    proposals: 12,
+    days_left: 5,
+    hot: true,
+    verified: true,
+    escrow: true,
+    complexity: "Medium",
+    data_ready: true,
+  },
+  {
+    id: "mock-2",
+    title: "AI agent to categorize and respond to 80% of inbound support emails",
+    problem_description: "Our small gym gets hundreds of support emails weekly about memberships, class schedules, and billing. Need an AI agent that can handle 80% of these automatically.",
+    bounty_amount: 2000,
+    industry: "other",
+    urgency: "soon",
+    payment_structure: "fixed",
+    ai_summary: "AI agent to categorize and auto-respond to 80% of inbound support emails for a gym.",
+    ai_completeness_score: 72,
+    ai_clarity_score: 80,
+    ai_scopability_score: 75,
+    hours_wasted: 10,
+    annual_cost: 32000,
+    impact_description: "Cuts response time by 80%",
+    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    author: "Sarah K.",
+    role: "Gym Owner",
+    proposals: 8,
+    days_left: 12,
+    verified: true,
+    escrow: true,
+    complexity: "Medium",
+    data_ready: true,
+  },
+  {
+    id: "mock-3",
+    title: "Build an interactive AI-powered wedding website with RSVP management",
+    problem_description: "We want a beautiful wedding website that uses AI to manage RSVPs, answer guest questions about the venue/schedule, and handle dietary preferences automatically.",
+    bounty_amount: 500,
+    industry: "other",
+    urgency: "normal",
+    payment_structure: "fixed",
+    ai_summary: "Interactive AI-powered wedding website with smart RSVP management and guest Q&A.",
+    ai_completeness_score: 55,
+    ai_clarity_score: 65,
+    ai_scopability_score: 60,
+    hours_wasted: 3,
+    annual_cost: 2000,
+    impact_description: "Automates guest management",
+    created_at: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    author: "Jamie & Alex",
+    role: "Engaged Couple",
+    proposals: 15,
+    days_left: 20,
+    escrow: true,
+    complexity: "Low",
+    data_ready: false,
+  },
+  {
+    id: "mock-4",
+    title: "Auto-generate social media posts from blog content with brand voice",
+    problem_description: "We publish 3-4 blog posts per week and need AI to automatically generate platform-specific social media posts that match our brand voice and style guidelines.",
+    bounty_amount: 1500,
+    industry: "marketing",
+    urgency: "asap",
+    payment_structure: "fixed",
+    ai_summary: "Auto-generate social media posts from blog content while maintaining brand voice consistency.",
+    ai_completeness_score: 80,
+    ai_clarity_score: 88,
+    ai_scopability_score: 82,
+    hours_wasted: 8,
+    annual_cost: 24000,
+    impact_description: "3x content output",
+    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    author: "Diana L.",
+    role: "Marketing Director",
+    proposals: 6,
+    days_left: 8,
+    hot: true,
+    verified: true,
+    escrow: true,
+    complexity: "Low",
+    data_ready: true,
+  },
+  {
+    id: "mock-5",
+    title: "Schedule optimization AI for 30+ field technicians across 3 cities",
+    problem_description: "Managing schedules for 30+ field technicians across 3 cities is a nightmare. Need an AI system that optimizes routes, handles cancellations, and minimizes idle time.",
+    bounty_amount: 6000,
+    industry: "logistics",
+    urgency: "soon",
+    payment_structure: "milestone",
+    ai_summary: "AI-powered schedule optimization for 30+ field technicians across multiple cities.",
+    ai_completeness_score: 78,
+    ai_clarity_score: 85,
+    ai_scopability_score: 70,
+    hours_wasted: 25,
+    annual_cost: 120000,
+    impact_description: "20% fewer idle hours",
+    created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    author: "Robert M.",
+    role: "Operations Manager",
+    proposals: 4,
+    days_left: 14,
+    verified: true,
+    escrow: true,
+    complexity: "High",
+    data_ready: true,
+  },
+  {
+    id: "mock-6",
+    title: "AI chatbot for patient intake and appointment pre-screening",
+    problem_description: "Our clinic needs an AI chatbot that handles patient intake forms, pre-screens appointments, collects insurance info, and routes patients to the right department.",
+    bounty_amount: 3000,
+    industry: "healthcare",
+    urgency: "soon",
+    payment_structure: "fixed",
+    ai_summary: "AI chatbot for patient intake, appointment pre-screening, and department routing.",
+    ai_completeness_score: 68,
+    ai_clarity_score: 75,
+    ai_scopability_score: 65,
+    hours_wasted: 12,
+    annual_cost: 56000,
+    impact_description: "Frees 2 FTEs from admin",
+    created_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    author: "Dr. Patel",
+    role: "Clinic Owner",
+    proposals: 9,
+    days_left: 7,
+    verified: true,
+    escrow: true,
+    complexity: "Medium",
+    data_ready: false,
+  },
+];
 
 const urgencyConfig: Record<string, { icon: React.ElementType; label: string; class: string }> = {
   asap: { icon: Flame, label: "ASAP", class: "bg-red-500/10 text-red-500 border-red-500/30" },
@@ -122,9 +285,10 @@ const BountyWall = () => {
 
     if (error) {
       console.error("Failed to fetch bounties:", error);
-    } else {
-      setBounties(data || []);
     }
+    // Merge real bounties with mock data
+    const real = (data || []) as Bounty[];
+    setBounties([...real, ...MOCK_BOUNTIES]);
     setLoading(false);
   };
 
@@ -353,7 +517,7 @@ const BountyWall = () => {
               {filtered.map((bounty, i) => {
                 const urg = bounty.urgency ? urgencyConfig[bounty.urgency] : null;
                 const UrgIcon = urg?.icon;
-                const timeAgo = getTimeAgo(bounty.created_at);
+                const complexityColor = { Low: "text-green-400", Medium: "text-yellow-400", High: "text-red-400" };
 
                 return (
                   <motion.div
@@ -364,99 +528,126 @@ const BountyWall = () => {
                     layout
                   >
                     <Link to={`/bounties/${bounty.id}`} className="block h-full">
-                    <Card className="h-full hover:border-primary/30 transition-colors cursor-pointer">
+                    <Card className="group relative h-full hover:border-primary/30 transition-all duration-300 cursor-pointer overflow-visible">
+                      {/* Hot badge */}
+                      {bounty.hot && (
+                        <div className="absolute -top-3 right-4 flex items-center gap-1.5 bg-gradient-to-r from-bounty to-bounty/80 text-bounty-foreground text-xs font-bold px-3 py-1 rounded-full glow-bounty z-10">
+                          <Flame className="w-3 h-3" /> HOT
+                        </div>
+                      )}
+
                       <CardHeader className="pb-3">
                         {/* Trust badges */}
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full border border-green-400/20">
-                            <Shield className="w-2.5 h-2.5" /> Escrow
-                          </span>
-                          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
-                            <BadgeCheck className="w-2.5 h-2.5" /> Verified
-                          </span>
+                          {(bounty.escrow !== false) && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-medium text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full border border-green-400/20">
+                              <Shield className="w-2.5 h-2.5" /> Escrow
+                            </span>
+                          )}
+                          {(bounty.verified !== false) && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
+                              <BadgeCheck className="w-2.5 h-2.5" /> Verified
+                            </span>
+                          )}
                         </div>
 
                         <div className="flex items-start justify-between gap-3">
-                          <CardTitle className="text-lg leading-snug line-clamp-2">{bounty.title}</CardTitle>
-                          <span className="text-xl font-bold text-accent whitespace-nowrap">
-                            {formatCurrency(bounty.bounty_amount)}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2 flex-wrap mt-1">
-                          {bounty.industry && (
-                            <Badge variant="secondary" className="text-xs capitalize">
-                              {INDUSTRY_LABELS[bounty.industry] || bounty.industry}
-                            </Badge>
-                          )}
-                          {urg && UrgIcon && (
-                            <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${urg.class}`}>
-                              {urg.label}
-                            </span>
-                          )}
-                          {bounty.payment_structure && (
-                            <Badge variant="outline" className="text-xs capitalize">
-                              {bounty.payment_structure}
-                            </Badge>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            {bounty.industry && (
+                              <span className="text-xs font-medium text-primary/80 bg-primary/10 px-3 py-1 rounded-full border border-primary/10">
+                                {INDUSTRY_LABELS[bounty.industry] || bounty.industry}
+                              </span>
+                            )}
+                            {urg && UrgIcon && (
+                              <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${urg.class}`}>
+                                {urg.label}
+                              </span>
+                            )}
+                          </div>
+                          {bounty.days_left != null && (
+                            <span className="text-xs text-muted-foreground font-mono whitespace-nowrap">{bounty.days_left}d left</span>
                           )}
                         </div>
-                      </CardHeader>
-                      <CardContent className="pb-3 space-y-3">
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {bounty.ai_summary || bounty.problem_description}
-                        </p>
 
+                        <CardTitle className="text-sm font-semibold leading-snug mt-2 group-hover:text-primary/90 transition-colors">
+                          {bounty.title}
+                        </CardTitle>
+                      </CardHeader>
+
+                      <CardContent className="pb-3 space-y-3">
                         {/* ROI metrics */}
                         {(bounty.annual_cost || bounty.hours_wasted || bounty.impact_description) && (
-                          <div className="flex items-center gap-4 p-2.5 rounded-lg bg-muted/30 border border-border/30 text-xs">
-                            {bounty.annual_cost && bounty.annual_cost > 0 && (
-                              <div className="flex items-center gap-1 text-primary">
+                          <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-muted/30 border border-border/30">
+                            <div className="text-center">
+                              <div className="flex items-center justify-center gap-1 text-primary">
                                 <DollarSign className="w-3 h-3" />
-                                <span className="font-bold">{formatCurrency(bounty.annual_cost)}</span>
-                                <span className="text-muted-foreground">/yr cost</span>
+                                <span className="text-xs font-bold">
+                                  {bounty.annual_cost ? `$${Math.round(bounty.annual_cost / 1000)}K` : "—"}
+                                </span>
                               </div>
-                            )}
-                            {bounty.hours_wasted && bounty.hours_wasted > 0 && (
-                              <div className="flex items-center gap-1 text-accent">
+                              <p className="text-[9px] text-muted-foreground mt-0.5">saved/yr</p>
+                            </div>
+                            <div className="text-center border-x border-border/30">
+                              <div className="flex items-center justify-center gap-1 text-accent">
                                 <Clock className="w-3 h-3" />
-                                <span className="font-bold">{bounty.hours_wasted}h</span>
-                                <span className="text-muted-foreground">/wk wasted</span>
+                                <span className="text-xs font-bold">{bounty.hours_wasted || "—"}h</span>
                               </div>
-                            )}
-                            {bounty.impact_description && (
-                              <p className="text-[10px] font-medium text-foreground/80 leading-tight">{bounty.impact_description}</p>
-                            )}
+                              <p className="text-[9px] text-muted-foreground mt-0.5">saved/wk</p>
+                            </div>
+                            <div className="text-center">
+                              <p className="text-[10px] font-medium text-foreground/80 leading-tight">{bounty.impact_description || "—"}</p>
+                            </div>
                           </div>
                         )}
 
                         {/* Builder signals */}
                         <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
-                          {bounty.ai_scopability_score !== null && (
-                            <span className={`inline-flex items-center gap-1 ${
-                              bounty.ai_scopability_score >= 70 ? "text-green-400" : bounty.ai_scopability_score >= 40 ? "text-yellow-400" : "text-red-400"
-                            }`}>
+                          {bounty.complexity && (
+                            <span className={`inline-flex items-center gap-1 ${complexityColor[bounty.complexity]}`}>
                               <Cpu className="w-3 h-3" />
-                              {bounty.ai_scopability_score >= 70 ? "Well scoped" : bounty.ai_scopability_score >= 40 ? "Partially scoped" : "Needs scoping"}
+                              {bounty.complexity}
                             </span>
                           )}
-                          {bounty.ai_completeness_score !== null && (
-                            <span className={`inline-flex items-center gap-1 ${
-                              bounty.ai_completeness_score >= 60 ? "text-green-400" : "text-yellow-400"
-                            }`}>
+                          {bounty.data_ready != null && (
+                            <span className={`inline-flex items-center gap-1 ${bounty.data_ready ? "text-green-400" : "text-yellow-400"}`}>
                               <Database className="w-3 h-3" />
-                              {bounty.ai_completeness_score >= 60 ? "Data ready" : "Needs detail"}
+                              {bounty.data_ready ? "Data ready" : "Needs data"}
                             </span>
                           )}
+                        </div>
+
+                        {/* Bounty amount */}
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-2xl font-extrabold text-gradient-primary">
+                            {formatCurrency(bounty.bounty_amount)}
+                          </span>
+                          <span className="text-xs text-muted-foreground">bounty</span>
                         </div>
                       </CardContent>
-                      <CardFooter className="flex items-center justify-between pt-0">
-                        <div className="flex items-center gap-3">
-                          <MiniScore score={bounty.ai_completeness_score} icon={Target} label="Completeness" />
-                          <MiniScore score={bounty.ai_clarity_score} icon={Eye} label="Clarity" />
-                          <MiniScore score={bounty.ai_scopability_score} icon={Crosshair} label="Scopability" />
+
+                      <CardFooter className="pt-0">
+                        <div className="w-full pt-3 border-t border-border/50 flex items-center justify-between">
+                          {bounty.author ? (
+                            <div className="flex items-center gap-2.5">
+                              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center text-xs font-bold text-primary">
+                                {bounty.author[0]}
+                              </div>
+                              <div>
+                                <p className="text-xs font-medium text-foreground">{bounty.author}</p>
+                                {bounty.role && <p className="text-[10px] text-muted-foreground">{bounty.role}</p>}
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-3">
+                              <MiniScore score={bounty.ai_completeness_score} icon={Target} label="Completeness" />
+                              <MiniScore score={bounty.ai_clarity_score} icon={Eye} label="Clarity" />
+                              <MiniScore score={bounty.ai_scopability_score} icon={Crosshair} label="Scopability" />
+                            </div>
+                          )}
+                          <span className="text-xs text-muted-foreground font-mono">
+                            {bounty.proposals != null ? `${bounty.proposals} proposals` : getTimeAgo(bounty.created_at)}
+                          </span>
                         </div>
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Clock className="w-3 h-3" /> {timeAgo}
-                        </span>
                       </CardFooter>
                     </Card>
                     </Link>
