@@ -41,9 +41,9 @@ const CTASection = () => {
       {/* Footer */}
       <div className="container mx-auto px-6 mt-20">
         <div className="flex flex-col md:flex-row items-center justify-between py-8 border-t border-border text-sm text-muted-foreground">
-          <div className="flex items-center gap-2 mb-4 md:mb-0">
+          <div className="flex items-center gap-2 mb-4 md:mb-0 text-primary">
             <PlaygroundLogo className="w-5 h-5" />
-            <span className="font-display font-bold text-foreground">playground.ai</span>
+            <span className="font-display font-bold tracking-wide uppercase">playground.ai</span>
           </div>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-foreground transition-colors">About</a>

@@ -172,9 +172,9 @@ const Auth = () => {
       >
         {/* Logo */}
         <div className="text-center mb-8">
-          <a href="/" className="inline-flex items-center gap-2.5">
+          <a href="/" className="inline-flex items-center gap-2.5 text-primary">
             <PlaygroundLogo className="w-7 h-7" />
-            <span className="text-2xl font-display font-bold text-foreground">
+            <span className="text-2xl font-display font-bold tracking-wide uppercase">
               playground.ai
             </span>
           </a>

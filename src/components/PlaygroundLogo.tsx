@@ -5,28 +5,18 @@ const PlaygroundLogo = ({ className = "w-7 h-7" }: { className?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={className}
   >
-    {/* Rounded square background with gradient */}
-    <defs>
-      <linearGradient id="pg-bg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-        <stop stopColor="hsl(270, 95%, 65%)" />
-        <stop offset="1" stopColor="hsl(200, 95%, 55%)" />
-      </linearGradient>
-      <linearGradient id="pg-accent" x1="14" y1="10" x2="30" y2="34" gradientUnits="userSpaceOnUse">
-        <stop stopColor="white" stopOpacity="0.95" />
-        <stop offset="1" stopColor="white" stopOpacity="0.7" />
-      </linearGradient>
-    </defs>
-
-    <rect width="40" height="40" rx="10" fill="url(#pg-bg)" />
-
-    {/* Play triangle — the "playground" symbol */}
-    <path
-      d="M16 12L30 20L16 28V12Z"
-      fill="url(#pg-accent)"
-    />
-
-    {/* Small dot — the "." in playground.ai */}
-    <circle cx="13" cy="31" r="2" fill="white" opacity="0.8" />
+    <g fill="currentColor">
+      {/* Pinwheel blade — top-left, sweeping from top toward left */}
+      <path d="M19 4C14 3 8 5.5 5.5 11C3.5 15 5.5 18 9 18C13 17.5 17 14 19.5 8.5C20.5 6 20.5 4.5 19 4Z" />
+      {/* Pinwheel blade — top-right, sweeping from right toward top */}
+      <path d="M36 19C37 14 34.5 8 29 5.5C25 3.5 22 5.5 22 9C22.5 13 26 17 31.5 19.5C34 20.5 35.5 20.5 36 19Z" />
+      {/* Pinwheel blade — bottom-right, sweeping from bottom toward right */}
+      <path d="M21 36C26 37 32 34.5 34.5 29C36.5 25 34.5 22 31 22C27 22.5 23 26 20.5 31.5C19.5 34 19.5 35.5 21 36Z" />
+      {/* Pinwheel blade — bottom-left, sweeping from left toward bottom */}
+      <path d="M4 21C3 26 5.5 32 11 34.5C15 36.5 18 34.5 18 31C17.5 27 14 23 8.5 20.5C6 19.5 4.5 19.5 4 21Z" />
+      {/* Center dot */}
+      <circle cx="14.5" cy="14.5" r="2.5" />
+    </g>
   </svg>
 );
 

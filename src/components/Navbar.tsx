@@ -27,9 +27,9 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container mx-auto flex items-center justify-between px-6 py-3.5">
-        <Link to="/" className="flex items-center gap-2.5">
+        <Link to="/" className="flex items-center gap-2.5 text-primary">
           <PlaygroundLogo className="w-7 h-7" />
-          <span className="text-lg font-display font-bold text-foreground">
+          <span className="text-lg font-display font-bold tracking-wide uppercase">
             playground.ai
           </span>
         </Link>
