@@ -280,7 +280,7 @@ const BountyAnalysis = () => {
 
   if (!analysis) return null;
 
-  const v = verdictConfig[analysis.verdict];
+  const v = verdictConfig[analysis.verdict] || verdictConfig.needs_work;
   const VerdictIcon = v.icon;
   const criticalMissing = analysis.missing_info.filter((m) => m.priority === "critical");
   const canPost = analysis.verdict === "ready" || (analysis.verdict === "needs_work" && criticalMissing.length === 0);

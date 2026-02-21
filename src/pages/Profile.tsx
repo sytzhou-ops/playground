@@ -167,7 +167,7 @@ const Profile = () => {
                 </div>
                 <div className="flex gap-3 pt-2">
                   <Button type="submit" disabled={saving} className="flex-1 bg-gradient-to-r from-primary to-primary/80 gap-2">{saving ? "Saving..." : <><Save className="w-4 h-4" /> Save</>}</Button>
-                  <Button type="button" variant="outline" onClick={() => { setEditing(false); if (profile) setFullName(profile.full_name || ""); }} className="flex-1 border-border/50 bg-secondary/30 gap-2"><X className="w-4 h-4" /> Cancel</Button>
+                  <Button type="button" variant="outline" onClick={() => { setEditing(false); if (profile) { setFullName(profile.full_name || ""); setDateOfBirth(profile.date_of_birth || ""); setPhoneNumber(profile.phone_number || ""); setCity(profile.city || ""); setCountry(profile.country || ""); setJobTitle(profile.job_title || ""); setCompany(profile.company || ""); setIndustry(profile.industry || ""); setLinkedinUrl(profile.linkedin_url || ""); } }} className="flex-1 border-border/50 bg-secondary/30 gap-2"><X className="w-4 h-4" /> Cancel</Button>
                 </div>
               </form>
             ) : (

@@ -35,7 +35,7 @@ export const useProfile = () => {
     enabled: !!user,
   });
 
-  const isOnboarded = profile ? profile.full_name.trim().length > 0 : false;
+  const isOnboarded = profile?.full_name ? profile.full_name.trim().length > 0 : false;
 
   const refetch = () => {
     if (user) {

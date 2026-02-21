@@ -28,8 +28,6 @@ import {
   Timer,
   Send,
   Users,
-  Shield,
-  BadgeCheck,
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -142,7 +140,9 @@ const BountyDetail = () => {
         .from("applications")
         .select("id", { count: "exact", head: true })
         .eq("bounty_id", id)
-        .then(({ count }) => setAppCount(count || 0));
+        .then(({ count, error: countError }) => {
+          if (!countError) setAppCount(count || 0);
+        });
     }
   }, [id, user]);
 
@@ -220,15 +220,7 @@ const BountyDetail = () => {
             <span className="text-2xl font-bold text-accent">{formatCurrency(bounty.bounty_amount)}</span>
           </div>
 
-          {/* Trust badges */}
-          <div className="flex items-center gap-2 mt-3 flex-wrap">
-            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-green-400 bg-green-400/10 px-2.5 py-1 rounded-full border border-green-400/20">
-              <Shield className="w-3 h-3" /> Escrow Protected
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-accent bg-accent/10 px-2.5 py-1 rounded-full border border-accent/20">
-              <BadgeCheck className="w-3 h-3" /> Verified Buyer
-            </span>
-          </div>
+          {/* Trust badges - to be re-enabled when payment/verification systems are implemented */}
 
           {/* ROI & Builder signals */}
           {(bounty.annual_cost || bounty.hours_wasted) && (

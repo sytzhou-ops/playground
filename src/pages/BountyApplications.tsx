@@ -285,13 +285,13 @@ const BountyApplications = () => {
                   <Input value={agreedTimeline} onChange={(e) => setAgreedTimeline(e.target.value)} placeholder="e.g. 2 weeks, 40 hours" maxLength={200} />
                 </div>
                 <div className="flex gap-2 pt-2">
-                  <Button onClick={createAgreement} disabled={creatingAgreement || !agreedScope || !agreedAmount || !agreedTimeline} className="gap-1">
+                  <Button onClick={createAgreement} disabled={creatingAgreement || !agreedScope.trim() || agreedAmount <= 0 || !agreedTimeline.trim()} className="gap-1">
                     {creatingAgreement ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                     Send Agreement
                   </Button>
                   <Button variant="ghost" onClick={() => setCreatingAgreementFor(null)}>Cancel</Button>
                 </div>
-                <p className="text-xs text-muted-foreground">The applicant will need to accept this agreement before work begins. Payment will be held in escrow via Stripe.</p>
+                <p className="text-xs text-muted-foreground">The applicant will need to accept this agreement before work begins.</p>
               </CardContent>
             </Card>
           </motion.div>

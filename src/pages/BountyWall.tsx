@@ -222,7 +222,7 @@ const BountyWall = () => {
       console.error("Failed to fetch bounties:", error);
     }
     const real = (data || []) as Bounty[];
-    setBounties([...real, ...MOCK_BOUNTIES]);
+    setBounties(real.length > 0 ? real : MOCK_BOUNTIES);
     setLoading(false);
   };
 

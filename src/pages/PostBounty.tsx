@@ -91,8 +91,22 @@ const PostBounty = () => {
   const update = (field: keyof BountyFormData, value: string | number) =>
     setFormData((prev) => ({ ...prev, [field]: value }));
 
+  const isStepValid = (s: number): boolean => {
+    switch (s) {
+      case 0: return formData.title.trim().length > 0 && formData.problemDescription.trim().length > 0;
+      case 1: return true; // pain step is informational, no required fields
+      case 2: return formData.desiredOutcome.trim().length > 0;
+      case 3: return formData.bountyAmount > 0;
+      case 4: return true; // timeline is optional
+      default: return true;
+    }
+  };
+
   const next = () => {
     if (step < STEPS.length - 1) {
+      if (!isStepValid(step)) {
+        return; // stay on current step
+      }
       setDirection(1);
       setStep((s) => s + 1);
     }
@@ -106,6 +120,7 @@ const PostBounty = () => {
   };
 
   const handleSubmit = () => {
+    if (!isStepValid(step)) return;
     navigate("/bounty-analysis", { state: { bountyData: formData } });
   };
 
@@ -208,11 +223,11 @@ const PostBounty = () => {
             <ArrowLeft className="w-4 h-4" /> Back
           </Button>
           {step < STEPS.length - 1 ? (
-            <Button onClick={next} className="gap-2 glow-primary">
+            <Button onClick={next} disabled={!isStepValid(step)} className="gap-2 glow-primary">
               Next <ArrowRight className="w-4 h-4" />
             </Button>
           ) : (
-            <Button onClick={handleSubmit} className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90 glow-bounty">
+            <Button onClick={handleSubmit} disabled={!isStepValid(step)} className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90 glow-bounty">
               <CheckCircle className="w-4 h-4" /> Submit Bounty
             </Button>
           )}
