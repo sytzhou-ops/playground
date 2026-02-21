@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useHunterProfile } from "@/hooks/useHunterProfile";
 import { useProfile } from "@/hooks/useProfile";
-import { ChevronDown, User, Settings, FileText, LogOut } from "lucide-react";
+import { AISparkle } from "./DoodleElements";
+import { Shield, ChevronDown, Zap, User, Settings, FileText, LogOut } from "lucide-react";
 import PlaygroundLogo from "./PlaygroundLogo";
 
 const Navbar = () => {
@@ -25,7 +26,12 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+    <motion.nav
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="fixed top-0 left-0 right-0 z-50 border-b border-border/30 glass-strong"
+    >
       <div className="container mx-auto flex items-center justify-between px-6 py-3.5">
         <Link to="/" className="flex items-center gap-2.5">
           <PlaygroundLogo className="w-7 h-7" />
@@ -43,7 +49,7 @@ const Navbar = () => {
             <Link
               key={link.to}
               to={link.to}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors px-4 py-2"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors px-4 py-2 rounded-lg hover:bg-secondary/50"
             >
               {link.label}
             </Link>
@@ -56,8 +62,9 @@ const Navbar = () => {
               {hunterStatus === "approved" ? null : (
                 <Link
                   to={hunterStatus === "pending" ? "/hunter-status" : "/become-hunter"}
-                  className="hidden sm:flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2"
+                  className="hidden sm:flex items-center gap-1.5 text-sm text-accent hover:text-accent/80 transition-colors px-3 py-2"
                 >
+                  <Shield className="w-3.5 h-3.5" />
                   {hunterStatus === "pending" ? "Hunter Status" : "Become a Hunter"}
                 </Link>
               )}
@@ -66,9 +73,9 @@ const Navbar = () => {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2"
+                  className="flex items-center gap-2 text-sm text-foreground/80 hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-secondary/50"
                 >
-                  <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-xs font-bold text-foreground">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary/40 to-accent/30 flex items-center justify-center text-xs font-bold text-primary-foreground">
                     {profile?.full_name?.trim()
                       ? profile.full_name.trim().split(/\s+/).map(n => n[0]).join("").toUpperCase().slice(0, 2)
                       : (user?.email?.[0] || "U").toUpperCase()}
@@ -80,13 +87,13 @@ const Navbar = () => {
                 <AnimatePresence>
                   {profileOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-56 rounded-xl border border-border bg-card shadow-lg py-1 z-50"
+                      className="absolute right-0 mt-2 w-60 rounded-xl glass-strong shadow-2xl shadow-primary/5 py-1 z-50 overflow-hidden"
                     >
-                      <div className="px-4 py-3 border-b border-border">
+                      <div className="px-4 py-3 border-b border-border/50">
                         <p className="text-sm font-semibold text-foreground truncate">{profile?.full_name || "User"}</p>
                         <p className="text-xs text-muted-foreground truncate mt-0.5">{user.email || user.phone}</p>
                       </div>
@@ -116,7 +123,7 @@ const Navbar = () => {
                           My Applications
                         </Link>
                       </div>
-                      <div className="border-t border-border py-1">
+                      <div className="border-t border-border/50 py-1">
                         <button
                           onClick={() => { setProfileOpen(false); signOut(); }}
                           className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-sm text-destructive/80 hover:text-destructive hover:bg-destructive/5 transition-colors"
@@ -132,8 +139,9 @@ const Navbar = () => {
 
               <Link
                 to="/post-bounty"
-                className="inline-flex items-center gap-2 text-sm font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-5 py-2.5 rounded-xl glow-primary hover:shadow-[0_0_40px_-8px_hsl(270_95%_65%_/_0.5)] transition-all duration-300"
               >
+                <Zap className="w-3.5 h-3.5" />
                 Post a Bounty
               </Link>
             </>
@@ -141,21 +149,22 @@ const Navbar = () => {
             <>
               <Link
                 to="/auth"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors px-4 py-2"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors px-4 py-2 rounded-lg hover:bg-secondary/50"
               >
                 Log in
               </Link>
               <Link
                 to="/auth"
-                className="inline-flex items-center gap-2 text-sm font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-5 py-2.5 rounded-xl glow-primary hover:shadow-[0_0_40px_-8px_hsl(270_95%_65%_/_0.5)] transition-all duration-300"
               >
+                <Zap className="w-3.5 h-3.5" />
                 Post a Bounty
               </Link>
             </>
           )}
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
